@@ -46,10 +46,10 @@ maps.n["<S-h>"] = {
   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
   desc = "Previous buffer"
 }
-maps.n["<leader>ba"] = { "ggVG", desc = "Select all" }
+maps.n["<leader>ba"] = { "ggVG", desc = "Select all in buffer" }
 maps.n["<leader>bd"] = { function() require("astronvim.utils.buffer").close() end, desc = "Delete buffer" }
 maps.n["<leader>bD"] = { function() require("astronvim.utils.buffer").close(0, true) end, desc = "Force delete buffer" }
-maps.n["<leader>bi"] = { "gg=G", desc = "Indent all" }
+maps.n["<leader>bi"] = { "gg=G", desc = "Indent all in buffer" }
 maps.n["<leader>bl"] = { "<cmd>b#<cr>", desc = "Last buffer" }
 maps.n["<leader>bn"] = {
   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
@@ -60,10 +60,12 @@ maps.n["<leader>bp"] = {
   desc = "Previous buffer"
 }
 maps.n["<leader>bs"] = { "<cmd>w<cr>", desc = "Save buffer" }
+maps.n["<leader>bS"] = { "<cmd>wa<cr>", desc = "Save all buffers" }
 maps.n["<leader>bt"] = { "<cmd>%s/\\s\\+$//e | noh<cr>", desc = "Remove trailing whitespaces" }
 if is_available("suda.vim") then
-  maps.n["<leader>bS"] = { "<cmd>SudaWrite<cr>", desc = "Save buffer as root" }
+  maps.n["<leader>bu"] = { "<cmd>SudaWrite<cr>", desc = "Save buffer as root" }
 end
+maps.n["<leader>by"] = { "ggVGy", desc = "Yank buffer" }
 
 -- Heirline bufferline
 if vim.g.tabline then

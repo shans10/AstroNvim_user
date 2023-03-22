@@ -12,6 +12,5 @@ return {
         link = "FloatBorder"
       },
     },
-    -- shell = "zsh"
-  }
+  },
 }
