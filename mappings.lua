@@ -14,10 +14,6 @@ maps.n["<leader>bb"] = false
 maps.n["<leader>."] = { function() require("telescope").extensions.file_browser.file_browser() end, desc = "File browser" }
 maps.n["<leader>W"] = { "<cmd>cd %:p:h<cr>", desc = "Set CWD to file" }
 
--- Navigating wrapped lines
-maps.n["j"] = { "gj", desc = "Navigate down" }
-maps.n["k"] = { "gk", desc = "Navigate down" }
-
 -- Better search
 maps.n["n"] = { require("user.utils").better_search "n", desc = "Next search" }
 maps.n["N"] = { require("user.utils").better_search "N", desc = "Previous search" }
@@ -167,9 +163,6 @@ maps.t["<esc><esc>"] = { "<C-\\><C-n>:q<cr>", desc = "Terminal quit" }
 
 --- VISUAL MODE ---
 --
--- Navigating wrapped lines
-maps.v["j"] = { "gj", desc = "Navigate down" }
-maps.v["k"] = { "gk", desc = "Navigate down" }
 
 -- Better increment/decrement
 maps.x["+"] = { "g<C-a>", desc = "Increment number" }
