@@ -4,7 +4,7 @@ return {
     "mrjones2014/nvim-ts-rainbow",
   },
   opts = {
-    auto_install = vim.fn.executable "tree-sitter" == 1,
+    auto_install = true,
     highlight = { disable = { "help" } },
     indent = { enable = true, disable = { "python" } },
     matchup = { enable = true },
