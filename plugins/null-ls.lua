@@ -5,7 +5,8 @@ return {
 
     config.sources = {
       -- Set a formatter
-      null_ls.builtins.formatting.black
+      null_ls.builtins.formatting.black,
+      null_ls.builtins.formatting.rustfmt
     }
     return config -- return final config table
   end,
