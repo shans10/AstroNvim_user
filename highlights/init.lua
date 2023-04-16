@@ -8,6 +8,8 @@ return function()
     DashboardFooter = { fg = grey, italic = true },
     DashboardHeader = { fg = grey, italic = true },
     DashboardShortcut = { fg = blue, italic = false },
-    HighlightURL = { underline = true }
+    HighlightURL = { underline = true },
+    WinBar = { fg = grey },
+    WinBarNC = { fg = grey },
   }
 end

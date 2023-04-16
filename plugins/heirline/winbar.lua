@@ -63,29 +63,13 @@ end
 return {
   -- default highlight for the entire winbar
   hl = { fg = "winbar_fg" },
-  -- disable winbar for certain filetypes
-  static = {
-    disabled = {
-      buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-      filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
-    },
-  },
   init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
-  {
-    condition = function(self)
-      return vim.opt.diff:get() or st.condition.buffer_matches(self.disabled or {})
-    end,
-    init = function() vim.opt_local.winbar = nil end,
-  },
   -- add a component to show filename
   st.component.file_info {
-    unique_path = {},
     file_icon = { hl = st.hl.file_icon "winbar" },
-    file_modified = false,
     file_read_only = false,
     hl = st.hl.get_attributes("winbar", true),
     surround = false,
-    update = "BufEnter",
   },
   -- add a component to show breadcrumbs
   st.component.builder {
