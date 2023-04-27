@@ -55,8 +55,8 @@ maps.n["<leader>bp"] = {
   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
   desc = "Previous buffer"
 }
-maps.n["<leader>bs"] = { "<cmd>w<cr>", desc = "Save buffer" }
-maps.n["<leader>bS"] = { "<cmd>wa<cr>", desc = "Save all buffers" }
+maps.n["<leader>bw"] = { "<cmd>w<cr>", desc = "Save buffer" }
+maps.n["<leader>bW"] = { "<cmd>wa<cr>", desc = "Save all buffers" }
 maps.n["<leader>bt"] = { "<cmd>%s/\\s\\+$//e | noh<cr>", desc = "Remove trailing whitespaces" }
 if is_available("suda.vim") then
   maps.n["<leader>bu"] = { "<cmd>SudaWrite<cr>", desc = "Save buffer as root" }
