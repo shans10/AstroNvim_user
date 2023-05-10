@@ -1,6 +1,6 @@
 local icons = {
   ActiveTS1 = "",
-  BookMark = "",
+  BookMark = "",
   FileNew = "",
   FileRecent = "",
   Find = "",
@@ -19,8 +19,8 @@ local heirline_theme = vim.g.heirline_theme
 if heirline_theme == "doom" then
   icons.ActiveLSP = ""
   icons.Bar = "┃"
-  icons.Directory = ""
-  icons.DoomFileModified = ""
+  icons.Directory = ""
+  icons.DoomFileModified = "󰆓"
   icons.DoomMode = ""
   icons.EvilMode = ""
   icons.GitChanges = ""
@@ -28,9 +28,9 @@ if heirline_theme == "doom" then
 -- Lunarvim theme
 elseif heirline_theme == "lunarvim" then
   icons.DefaultFile = ""
-  icons.Mode = ""
+  icons.Mode = "󰀘"
   icons.Separator = "|"
-  icons.Shiftwidth = ""
+  icons.Shiftwidth = "󰌒"
 
 -- Nvchad theme
 elseif heirline_theme == "nvchad" then
