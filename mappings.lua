@@ -1,4 +1,5 @@
 local is_available = require "astronvim.utils".is_available
+local get_icon = require "astronvim.utils".get_icon
 
 local maps = { i = {}, n = {}, t = {}, v = {}, x = {} }
 
@@ -9,6 +10,13 @@ maps.n["<leader>o"] = false
 maps.n["<leader>b|"] = false
 maps.n["<leader>b\\"] = false
 maps.n["<leader>bb"] = false
+-- Bisable default buffer sort keybindings
+maps.n["<leader>bs"] = false
+maps.n["<leader>bse"] = false
+maps.n["<leader>bsi"] = false
+maps.n["<leader>bsm"] = false
+maps.n["<leader>bsp"] = false
+maps.n["<leader>bsr"] = false
 
 -- Standard leader-key operations
 maps.n["<leader>."] = { function() require("telescope").extensions.file_browser.file_browser() end, desc = "File browser" }
@@ -42,10 +50,10 @@ maps.n["<S-h>"] = {
   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
   desc = "Previous buffer"
 }
-maps.n["<leader>ba"] = { "ggVG", desc = "Select all in buffer" }
+maps.n["<leader>ba"] = { "ggVG", desc = "Select all" }
 maps.n["<leader>bd"] = { function() require("astronvim.utils.buffer").close() end, desc = "Delete buffer" }
 maps.n["<leader>bD"] = { function() require("astronvim.utils.buffer").close(0, true) end, desc = "Force delete buffer" }
-maps.n["<leader>bi"] = { "gg=G", desc = "Indent all in buffer" }
+maps.n["<leader>bi"] = { "gg=G", desc = "Indent all" }
 maps.n["<leader>bl"] = { "<cmd>b#<cr>", desc = "Last buffer" }
 maps.n["<leader>bn"] = {
   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
@@ -55,13 +63,20 @@ maps.n["<leader>bp"] = {
   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
   desc = "Previous buffer"
 }
-maps.n["<leader>bw"] = { "<cmd>w<cr>", desc = "Save buffer" }
-maps.n["<leader>bW"] = { "<cmd>wa<cr>", desc = "Save all buffers" }
+maps.n["<leader>bs"] = { "<cmd>w<cr>", desc = "Save buffer" }
+maps.n["<leader>bS"] = { "<cmd>wa<cr>", desc = "Save all buffers" }
 maps.n["<leader>bt"] = { "<cmd>%s/\\s\\+$//e | noh<cr>", desc = "Remove trailing whitespaces" }
 if is_available("suda.vim") then
   maps.n["<leader>bu"] = { "<cmd>SudaWrite<cr>", desc = "Save buffer as root" }
 end
 maps.n["<leader>by"] = { "ggVGy", desc = "Yank buffer" }
+maps.n["<leader>b<C-s>"] = { desc = get_icon("Sort", 1, true) .. "Sort Buffers" }
+maps.n["<leader>b<C-s>e"] = { function() require("astronvim.utils.buffer").sort "extension" end, desc = "By extension" }
+maps.n["<leader>b<C-s>r"] =
+  { function() require("astronvim.utils.buffer").sort "unique_path" end, desc = "By relative path" }
+maps.n["<leader>b<C-s>p"] = { function() require("astronvim.utils.buffer").sort "full_path" end, desc = "By full path" }
+maps.n["<leader>b<C-s>i"] = { function() require("astronvim.utils.buffer").sort "bufnr" end, desc = "By buffer number" }
+maps.n["<leader>b<C-s>m"] = { function() require("astronvim.utils.buffer").sort "modified" end, desc = "By modification" }
 
 -- Heirline bufferline
 if vim.g.tabline then
