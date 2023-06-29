@@ -125,9 +125,7 @@ end
 -- Telescope
 if is_available "telescope.nvim" then
   -- Buffer
-  maps.n["<leader>,"] = { function() require("telescope.builtin").buffers() end, desc = "Switch buffer" }
-  maps.n["<leader>bb"] = { function() require("telescope.builtin").buffers() end, desc = "Switch buffer" }
-  maps.n["<Tab>"] = {
+  maps.n["<leader>,"] = {
     function()
       if #vim.t.bufs > 1 then
         require("telescope.builtin").buffers { sort_mru = true, ignore_current_buffer = true }
@@ -135,8 +133,9 @@ if is_available "telescope.nvim" then
         require "astronvim.utils".notify "No other buffers open"
       end
     end,
-    desc = "Switch Buffers",
+    desc = "Switch buffer",
   }
+  maps.n["<leader>bb"] = maps.n["<leader>,"]
 
   -- Find
   maps.n["<leader>fd"] = {
