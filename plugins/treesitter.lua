@@ -1,12 +1,11 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
-    "mrjones2014/nvim-ts-rainbow",
+    { "andymass/vim-matchup",    init = function() vim.g.matchup_matchparen_deferred = 1 end },
+    { "HiPhish/nvim-ts-rainbow2" },
   },
   opts = {
-    auto_install = true,
     highlight = { disable = { "help" } },
-    indent = { enable = true, disable = { "python" } },
     matchup = { enable = true },
     rainbow = { enable = true },
   },
