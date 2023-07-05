@@ -5,7 +5,6 @@ return {
     "nvim-telescope/telescope-project.nvim"
   },
   opts = function(_, opts)
-    local telescope = require "telescope"
     local actions = require "telescope.actions"
     local fb_actions = require("telescope").extensions.file_browser.actions
     return require("astronvim.utils").extend_tbl(opts, {
