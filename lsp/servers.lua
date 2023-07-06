@@ -3,5 +3,6 @@ return {
   "bashls",
   "clangd",
   "hls",
-  "pyright"
+  "pyright",
+  "rust_analyzer"
 }
