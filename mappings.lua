@@ -10,7 +10,7 @@ maps.n["<leader>o"] = false
 maps.n["<leader>b|"] = false
 maps.n["<leader>b\\"] = false
 maps.n["<leader>bb"] = false
--- Bisable default buffer sort keybindings
+-- Disable default buffer sort keybindings
 maps.n["<leader>bs"] = false
 maps.n["<leader>bse"] = false
 maps.n["<leader>bsi"] = false
@@ -20,7 +20,7 @@ maps.n["<leader>bsr"] = false
 
 -- Standard leader-key operations
 maps.n["<leader>."] = { function() require("telescope").extensions.file_browser.file_browser() end, desc = "File browser" }
-maps.n["<leader>W"] = { "<cmd>cd %:p:h<cr>", desc = "Set CWD to file" }
+maps.n["<leader><C-w>"] = { "<cmd>cd %:p:h<cr>", desc = "Set CWD to file" }
 
 -- Better search
 maps.n["n"] = { require("user.utils").better_search "n", desc = "Next search" }
@@ -54,7 +54,7 @@ maps.n["<leader>ba"] = { "ggVG", desc = "Select all" }
 maps.n["<leader>bd"] = { function() require("astronvim.utils.buffer").close() end, desc = "Delete buffer" }
 maps.n["<leader>bD"] = { function() require("astronvim.utils.buffer").close(0, true) end, desc = "Force delete buffer" }
 maps.n["<leader>bi"] = { "gg=G", desc = "Indent all" }
-maps.n["<leader>bl"] = { "<cmd>b#<cr>", desc = "Last buffer" }
+maps.n["<leader>bl"] = { "<cmd>e#<cr>", desc = "Last buffer" }
 maps.n["<leader>bn"] = {
   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
   desc = "Next buffer"
@@ -155,6 +155,16 @@ end
 
 -- UI
 maps.n["<leader>uA"] = { function() require("astronvim.utils.ui").toggle_autoformat() end, desc = "Toggle autoformatting" }
+
+-- Trouble
+if is_available("trouble.nvim") then
+    maps.n["<leader>x"] = { desc = "󰒡 Trouble" }
+    maps.n["<leader>xx"] = { "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics" }
+    maps.n["<leader>xX"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" }
+    maps.n["<leader>xl"] = { "<cmd>TroubleToggle loclist<cr>", desc = "Location List" }
+    maps.n["<leader>xq"] = { "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List" }
+    maps.n["<leader>xT"] = { "<cmd>TodoTrouble<cr>", desc = "TODOs" }
+end
 
 --- INSERT MODE ---
 --

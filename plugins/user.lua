@@ -31,6 +31,17 @@ return {
     config = function() require("indent-tools").config {} end,
   },
   {
+    "folke/trouble.nvim",
+    cmd = { "TroubleToggle", "Trouble" },
+    opts = {
+      use_diagnostic_signs = true,
+      action_keys = {
+        close = { "q", "<esc>" },
+        cancel = "<c-e>",
+      },
+    },
+  },
+  {
     "echasnovski/mini.surround",
     keys = {
       { "sa", desc = "Add surrounding", mode = { "n", "v" } },
