@@ -3,17 +3,6 @@ return {
   name = "catppuccin",
   opts = {
     dim_inactive = { enabled = true, percentage = 0.35 },
-    custom_highlights = function(colors)
-      return {
-        -- Line numbers
-        CursorLineNr = { bold = true },
-        -- LineNr = { italic = true },
-
-        -- Indent blankline
-        IndentBlanklineContextChar = { fg = colors.flamingo },
-        -- IndentBlanklineContextStart = { sp = colors.flamingo },
-      }
-    end,
     integrations = {
       aerial = true,
       dap = { enabled = true, enable_ui = true },

@@ -1,6 +1,6 @@
 local status = require("astronvim.utils.status")
 
--- default statusline with filename instead of filetype
+-- Default statusline with filename instead of filetype
 return {
   hl = { fg = "fg", bg = "bg" },
   status.component.mode(),
@@ -13,6 +13,7 @@ return {
   status.component.fill(),
   status.component.lsp(),
   status.component.treesitter(),
+  status.component.file_info { file_icon = false, filetype = {}, filename = false, file_modified = false, surround = { separator = "right" } },
   status.component.nav(),
   status.component.mode { surround = { separator = "right" } },
 }

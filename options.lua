@@ -4,6 +4,7 @@ return {
     -- listchars = vim.opt.listchars:append({ tab = '› ', trail = '•', lead = '.', extends = '#', nbsp = '.' }), -- change whitespace characters
     listchars = vim.opt.listchars:append({ tab = '› ', trail = '•' }), -- change whitespace characters
     showtabline = 0, -- disable tabline (also set vim.g.tabline accordingly { true for 1, 2 or false for 0 })
+    swapfile = false,
     title = true, -- enable neovim to set terminal title
     titlestring = "Neovim: %f", -- set titlestring to be displayed
     whichwrap = vim.opt.whichwrap:append "<,>[,],h,l", -- automatically go to next line

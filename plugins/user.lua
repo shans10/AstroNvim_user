@@ -54,4 +54,8 @@ return {
     },
     opts = { n_lines = 200 },
   },
+  {
+    "mbbill/undotree",
+    event = "User AstroFile",
+  }
 }

@@ -18,17 +18,23 @@ maps.n["<leader>bsm"] = false
 maps.n["<leader>bsp"] = false
 maps.n["<leader>bsr"] = false
 
+-- Usability remaps
+maps.n["J"] = { "mzJ`z" }
+maps.n["<C-d>"] = { "<C-d>zz" }
+maps.n["<C-u>"] = { "<C-u>zz" }
+
 -- Standard leader-key operations
 maps.n["<leader>."] = { function() require("telescope").extensions.file_browser.file_browser() end, desc = "File browser" }
-maps.n["<leader><C-w>"] = { "<cmd>cd %:p:h<cr>", desc = "Set CWD to file" }
+maps.n["<leader>U"] = { "<cmd>UndotreeToggle<cr>", desc = "Undotree" }
+maps.n["<leader><C-w>"] = { "<cmd>cd %:p:h<cr>", desc = "Set CWD to current file" }
 
 -- Better search
 maps.n["n"] = { require("user.utils").better_search "n", desc = "Next search" }
 maps.n["N"] = { require("user.utils").better_search "N", desc = "Previous search" }
 
 -- Better increment/decrement
-maps.n["-"] = { "<c-x>", desc = "Descrement number" }
-maps.n["+"] = { "<c-a>", desc = "Increment number" }
+maps.n["-"] = { "<C-x>", desc = "Decrement number" }
+maps.n["+"] = { "<C-a>", desc = "Increment number" }
 
 -- Neo-tree
 if is_available "neo-tree.nvim" then
@@ -54,7 +60,7 @@ maps.n["<leader>ba"] = { "ggVG", desc = "Select all" }
 maps.n["<leader>bd"] = { function() require("astronvim.utils.buffer").close() end, desc = "Delete buffer" }
 maps.n["<leader>bD"] = { function() require("astronvim.utils.buffer").close(0, true) end, desc = "Force delete buffer" }
 maps.n["<leader>bi"] = { "gg=G", desc = "Indent all" }
-maps.n["<leader>bl"] = { "<cmd>e#<cr>", desc = "Last buffer" }
+maps.n["<leader>bl"] = { require("user.utils").last_buffer(), desc = "Last buffer" }
 maps.n["<leader>bn"] = {
   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
   desc = "Next buffer"
@@ -190,6 +196,7 @@ maps.t["<esc><esc>"] = { "<C-\\><C-n>:q<cr>", desc = "Terminal quit" }
 
 -- Better increment/decrement
 maps.x["+"] = { "g<C-a>", desc = "Increment number" }
-maps.x["-"] = { "g<C-x>", desc = "Descrement number" }
+maps.x["-"] = { "g<C-x>", desc = "Decrement number" }
+maps.x["p"] = { [["_dP]], desc = "Paste with preserve" }
 
 return maps
