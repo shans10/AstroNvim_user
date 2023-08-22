@@ -12,7 +12,7 @@ return {
     if themes[theme] then
       opts.statusline = require("user.plugins.heirline.themes." .. theme)
       -- If tabline is disabled show default statusline with filename
-    elseif not vim.g.tabline then
+    elseif vim.o.stal == 0 then
       opts.statusline = require "user.plugins.heirline.themes.default"
     end
 
