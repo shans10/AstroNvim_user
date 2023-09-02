@@ -1,11 +1,11 @@
 local status = require("astronvim.utils.status")
 
--- Default statusline with filename instead of filetype
+-- Default statusline with filename
 return {
   hl = { fg = "fg", bg = "bg" },
   status.component.mode(),
   status.component.git_branch(),
-  status.component.file_info { file_icon = false, unique_path = {} },
+  status.component.file_info { file_icon = false, hl = { bold = true, italic = true }, unique_path = {} },
   status.component.git_diff(),
   status.component.diagnostics(),
   status.component.fill(),

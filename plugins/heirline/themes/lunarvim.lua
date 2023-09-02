@@ -17,7 +17,7 @@ local function lsp_clients_provider(self)
     if client.name == "null-ls" then
       local null_ls_sources = {}
       for _, type in ipairs { "FORMATTING", "DIAGNOSTICS" } do
-        for _, source in ipairs(astronvim.null_ls_sources(vim.bo.filetype, type)) do
+        for _, source in ipairs(status.utils.null_ls_sources(vim.bo.filetype, type)) do
           null_ls_sources[source] = true
         end
       end

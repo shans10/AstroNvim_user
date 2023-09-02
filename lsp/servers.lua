@@ -4,5 +4,6 @@ return {
   "clangd",
   "hls",
   "pyright",
-  "rust_analyzer"
+  "rust_analyzer",
+  "tsserver"
 }

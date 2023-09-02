@@ -3,7 +3,7 @@ return function(colors)
   local get_hlgroup = require("astronvim.utils").get_hlgroup
 
   -- Bufferline
-  colors.buffer_path_fg = get_hlgroup("NonText").fg
+  -- colors.buffer_path_fg = get_hlgroup("NonText").fg
 
   -- Winbar
   -- colors.winbar_fg = get_hlgroup("NonText").fg
