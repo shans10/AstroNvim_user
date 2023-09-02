@@ -84,6 +84,8 @@ return {
   -- fill the rest of the statusline
   -- the elements after this will appear in the middle of the statusline
   status.component.fill(),
+  status.component.cmd_info(),
+  status.component.fill(),
   -- add a component to show lsp progress
   status.component.builder {
     flexible = 1,
@@ -113,7 +115,7 @@ return {
     {
       condition = status.condition.lsp_attached,
       {
-        flexible = 1,
+        flexible = 2,
         {
           provider = lsp_clients_provider,
         },
@@ -127,7 +129,6 @@ return {
         vim.defer_fn(function() vim.cmd.LspInfo() end, 100)
       end,
     },
-    update = { "LspAttach", "LspDetach", "BufEnter" },
   },
   -- add a component to show current shiftwidth(indent spaces) of a file
   status.component.builder {

@@ -178,7 +178,7 @@ return {
         { provider = "" }
       },
       {
-        flexible = 1,
+        flexible = 2,
         {
           provider = current_path_provider(),
           hl = function() return file_modified_hl("visual") end
