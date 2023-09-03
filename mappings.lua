@@ -153,9 +153,9 @@ if is_available "telescope.nvim" then
   -- LSP
   maps.n["<leader>ld"] = {
     function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end,
-    desc = "Show document diagnostics"
+    desc = "Document diagnostics"
   }
-  maps.n["<leader>lD"] = { function() require("telescope.builtin").diagnostics() end, desc = "Show workspace diagnostics" }
+  maps.n["<leader>lD"] = { function() require("telescope.builtin").diagnostics() end, desc = "Workspace diagnostics" }
   maps.n["<leader>le"] = { function() require("telescope.builtin").lsp_definitions() end, desc = "Show definition" }
 end
 

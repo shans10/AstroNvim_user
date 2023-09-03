@@ -57,11 +57,12 @@ local function diag_sep_condition(target)
 end
 
 -- A condition function if buffer is a valid file
-local function is_valid_file_condition()
-  return not status.condition.buffer_matches {
+local function is_valid_file_condition(self)
+  local bufnr = self and self.bufnr or 0
+  return not status.condition.buffer_matches ({
     buftype = { "nofile", "prompt", "quickfix" },
     filetype = { "^git.*", "fugitive", "toggleterm", "NvimTree" },
-  }
+  }, bufnr)
 end
 
 -- A provider function for current relative path

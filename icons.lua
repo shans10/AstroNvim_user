@@ -17,10 +17,10 @@ local heirline_theme = vim.g.heirline_theme
 
 -- Doom theme
 if heirline_theme == "doom" then
-  icons.ActiveLSP = ""
+  icons.ActiveLSP = ""
   icons.Bar = "┃"
   icons.Directory = ""
-  icons.DoomFileModified = "󰆓"
+  icons.DoomFileModified = "󰳻"
   icons.DoomMode = ""
   icons.EvilMode = ""
   icons.GitChanges = ""
