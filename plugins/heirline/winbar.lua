@@ -67,9 +67,9 @@ return {
   -- add a component to show filename
   status.component.file_info {
     file_icon = { hl = status.hl.file_icon "winbar" },
-    file_read_only = false,
     hl = status.hl.get_attributes("winbar", true),
     surround = false,
+    unique_path = {},
   },
   -- add a component to show breadcrumbs
   status.component.builder {
