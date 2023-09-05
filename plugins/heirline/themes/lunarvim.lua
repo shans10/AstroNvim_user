@@ -55,7 +55,11 @@ return {
       provider = status.utils.pad_string(get_icon "Mode", { left = 1, right = 1 }),
       hl = mode_hl
     },
-    update = "ModeChanged",
+    update = {
+      "ModeChanged",
+      pattern = "*:*",
+      callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
+    },
   },
   -- add a component for the current git branch if it exists and use no separator for the sections
   status.component.builder {
@@ -84,30 +88,15 @@ return {
   -- fill the rest of the statusline
   -- the elements after this will appear in the middle of the statusline
   status.component.fill(),
+  -- add a component for search count and macro recording status
   status.component.cmd_info(),
+  -- fill the rest of the statusline
+  -- the elements after this will appear on the right of the statusline
   status.component.fill(),
   -- add a component to show lsp progress
-  status.component.builder {
-    flexible = 1,
-    {
-      condition = function() return vim.bo.filetype ~= "haskell" end,
-      provider = status.provider.lsp_progress { padding = { right = 1 } }
-    },
-    { provider = "" },
-    update = { "User", pattern = { "LspProgressUpdate", "LspRequest" } },
-  },
+  status.component.lsp { lsp_client_names = false, surround = { separator = "right", color = "bg" } },
   -- add a component for the current diagnostics if it exists
-  status.component.diagnostics {
-    surround = { separator = "right" },
-    on_click = {
-      name = "heirline_diagnostic",
-      callback = function()
-        if is_available "telescope.nvim" then
-          vim.defer_fn(function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, 100)
-        end
-      end,
-    },
-  },
+  status.component.diagnostics { surround = { separator = "right" }, },
   -- add a component to show running lsp clients
   status.component.builder {
     fallthrough = false,
@@ -155,6 +144,6 @@ return {
       provider = " %P/%L ",
       hl = mode_hl
     },
-    update = { "CursorMoved", "BufEnter", "ModeChanged" },
+    update = { "CursorMoved", "CursorMovedI", "BufEnter" },
   }
 }

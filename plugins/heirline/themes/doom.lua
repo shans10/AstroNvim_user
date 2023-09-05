@@ -147,7 +147,11 @@ return {
     hl = function() return { fg = status.hl.mode_bg() } end,
     provider = get_icon "EvilMode",
     surround = { separator = "left" },
-    update = "ModeChanged",
+    update = {
+      "ModeChanged",
+      pattern = "*:*",
+      callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
+    },
   },
   -- add a component for search results
   status.component.builder {
@@ -213,6 +217,8 @@ return {
   -- fill the rest of the statusline
   -- the elements after this will appear in the right side of the statusline
   status.component.fill(),
+  -- add a component to show lsp progress
+  status.component.lsp { lsp_client_names = false, surround = { separator = "right", color = "bg" } },
   -- add a component for the current diagnostics if it exists
   status.component.builder {
     hl = { fg = "fg" },
@@ -240,29 +246,24 @@ return {
         end
       end,
     },
+    update = { "DiagnosticChanged", "BufEnter" },
   },
-  -- add component to show lsp progress and lsp status icon if lsp is active
+  -- add component to show lsp status icon if lsp is active
   status.component.builder {
     condition = status.condition.lsp_attached,
-    {
-      flexible = 3,
-      {
-        condition = function() return vim.bo.filetype ~= "haskell" end,
-        provider = status.provider.lsp_progress { padding = { right = 1 } }
-      },
-      { provider = "" },
-      update = { "User", pattern = { "LspProgressUpdate", "LspRequest" } },
-    },
-    {
-      provider = status.utils.pad_string(get_icon("ActiveLSP"), { right = 2 }), hl = { fg = "treesitter_fg" },
-      update = { "LspAttach", "LspDetach", "BufEnter" },
-    },
+    provider = status.utils.pad_string(get_icon("ActiveLSP"), { right = 2 }), hl = { fg = "treesitter_fg" },
     surround = { separator = "right", condition = status.condition.lsp_attached },
     on_click = {
       name = "heirline_lsp",
       callback = function()
         vim.defer_fn(function() vim.cmd.LspInfo() end, 100)
       end,
+    },
+    update = {
+      "LspAttach",
+      "LspDetach",
+      "BufEnter",
+      callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
     },
   },
   -- add a component to show filetype for current file

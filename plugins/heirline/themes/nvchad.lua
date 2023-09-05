@@ -58,7 +58,7 @@ return {
   -- the elements after this will appear on the right of the statusline
   status.component.fill(),
   -- add a component to display if the LSP is loading, disable showing running client names, and use no separator
-  status.component.lsp { lsp_client_names = false, surround = { separator = "none", color = "bg" } },
+  status.component.lsp { lsp_client_names = false, surround = { separator = "right", color = "bg" } },
   -- add a component for the current diagnostics if it exists
   status.component.diagnostics {
     surround = { separator = "right" },
