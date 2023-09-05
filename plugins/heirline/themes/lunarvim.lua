@@ -6,7 +6,7 @@ local status = require "astronvim.utils.status"
 -- A highlight function to return highlight based on vi mode
 local function mode_hl()
   local mode_bg = status.env.modes[vim.fn.mode()][2]
-  return { fg = "bg", bg = mode_bg }
+  return { fg = "#000000", bg = mode_bg }
 end
 
 -- A provider function for showing the connected LSP client names

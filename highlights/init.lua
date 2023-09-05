@@ -18,6 +18,6 @@ return function()
     -- NeoTreeNormalNC = { bg = "NONE" },
     -- Normal = { bg = "NONE" },
     -- NormalFloat = { bg = "NONE" },
-    -- NormalNC = { bg = "NONE" },
+    NormalNC = { bg = "NONE" },
   }
 end

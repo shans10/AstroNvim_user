@@ -14,6 +14,7 @@ return {
 
   -- add the vim mode component
   status.component.mode {
+    hl = { fg = "#000000" },
     -- enable mode text with padding as well as an icon before it
     mode_text = { icon = { kind = "VimIcon", padding = { right = 1, left = 1 } } },
     -- surround the component with a separators
@@ -51,13 +52,13 @@ return {
   -- fill the rest of the statusline
   -- the elements after this will appear in the middle of the statusline
   status.component.fill(),
+  -- add a component for search count and macro recording status
   status.component.cmd_info(),
-  status.component.fill(),
-  -- add a component to display if the LSP is loading, disable showing running client names, and use no separator
-  status.component.lsp { lsp_client_names = false, surround = { separator = "none", color = "bg" } },
   -- fill the rest of the statusline
   -- the elements after this will appear on the right of the statusline
   status.component.fill(),
+  -- add a component to display if the LSP is loading, disable showing running client names, and use no separator
+  status.component.lsp { lsp_client_names = false, surround = { separator = "none", color = "bg" } },
   -- add a component for the current diagnostics if it exists
   status.component.diagnostics {
     surround = { separator = "right" },
@@ -71,7 +72,7 @@ return {
     },
   },
   -- add a component to display LSP clients, disable showing LSP progress, and use the right separator
-  status.component.lsp { lsp_progress = false, surround = { separator = separators.right } },
+  status.component.lsp { lsp_progress = false },
   -- NvChad has some nice icons to go along with information, so we can create a parent component to do this
   -- all of the children of this table will be treated together as a single component
   {
@@ -82,7 +83,7 @@ return {
       -- add padding after icon
       padding = { right = 1 },
       -- set the foreground color to be used for the icon
-      hl = { fg = "bg" },
+      hl = { fg = "#000000" },
       -- use the right separator and define the background color
       surround = { separator = separators.right, color = "folder_icon_bg" },
     },
@@ -108,7 +109,7 @@ return {
       -- add padding after icon
       padding = { right = 1 },
       -- set the icon foreground
-      hl = { fg = "bg" },
+      hl = { fg = "#000000" },
       -- use the right separator and define the background color
       -- as well as the color to the left of the separator
       surround = { separator = separators.right, color = { main = "nav_icon_bg", left = "file_info_bg" } },

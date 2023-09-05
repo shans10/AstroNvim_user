@@ -3,8 +3,8 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = {
-      flavour = "mocha", -- latte, frappe, macchiato, mocha
-      transparent_background = true, -- disables setting the background color.
+      flavour = "mocha",
+      transparent_background = true,
       dim_inactive = { enabled = true, percentage = 0.35 },
       integrations = {
         aerial = true,
