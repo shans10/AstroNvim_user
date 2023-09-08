@@ -40,6 +40,12 @@ elseif heirline_theme == "nvchad" then
   icons.GitAdd = ""
   icons.GitChange = ""
   icons.GitDelete = ""
+
+elseif heirline_theme == "simple" then
+  icons.GitBranch = ""
+  icons.GitAdd = "+"
+  icons.GitChange = "~"
+  icons.GitDelete = "-"
 end
 
 return icons

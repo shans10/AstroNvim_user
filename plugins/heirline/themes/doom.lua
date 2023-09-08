@@ -41,14 +41,10 @@ end
 -- A condition function if diagnostic separator is required based on diagnostic count and type
 local function diag_sep_condition(target)
   local count = 0
-  local error = #
-      vim.diagnostic.get(0, { severity = vim.diagnostic.severity["ERROR"] })
-  local warn = #
-      vim.diagnostic.get(0, { severity = vim.diagnostic.severity["WARN"] })
-  local info = #
-      vim.diagnostic.get(0, { severity = vim.diagnostic.severity["INFO"] })
-  local hint = #
-      vim.diagnostic.get(0, { severity = vim.diagnostic.severity["HINT"] })
+  local error = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity["ERROR"] })
+  local warn = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity["WARN"] })
+  local info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity["INFO"] })
+  local hint = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity["HINT"] })
   local diag = { error, warn, info, hint }
   for i = target + 1, #diag do
     count = count + diag[i]
@@ -250,8 +246,9 @@ return {
   },
   -- add component to show lsp status icon if lsp is active
   status.component.builder {
+    hl = { fg = "treesitter_fg" },
     condition = status.condition.lsp_attached,
-    provider = status.utils.pad_string(get_icon("ActiveLSP"), { right = 2 }), hl = { fg = "treesitter_fg" },
+    provider = status.utils.pad_string(get_icon("ActiveLSP"), { right = 2 }),
     surround = { separator = "right", condition = status.condition.lsp_attached },
     on_click = {
       name = "heirline_lsp",

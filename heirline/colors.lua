@@ -6,8 +6,7 @@ return function(colors)
   -- colors.buffer_path_fg = get_hlgroup("NonText").fg
 
   -- Winbar
-  -- colors.winbar_fg = get_hlgroup("NonText").fg
-  -- colors.winbarnc_fg = get_hlgroup("NonText").fg
+  colors.winbar_fg = get_hlgroup("Normal").fg
 
   -- Set colors based on chosen heirline statusline theme
   --
@@ -33,8 +32,8 @@ return function(colors)
     colors.ruler_fg = normal_fg
     colors.ruler_bg = cursorline_bg
     colors.separator_bg = cursorline_bg
-    colors.winbar_fg = get_hlgroup("Normal").fg
-    colors.winbarnc_fg = get_hlgroup("Normal").fg
+    -- colors.winbar_fg = get_hlgroup("Normal").fg
+    -- colors.winbarnc_fg = get_hlgroup("Normal").fg
 
     -- Nvchad theme
   elseif theme == "nvchad" then

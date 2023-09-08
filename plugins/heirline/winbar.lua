@@ -67,13 +67,15 @@ return {
   -- add a component to show filename
   status.component.file_info {
     file_icon = { hl = status.hl.file_icon "winbar" },
+    file_modified = { str = "[+]", icon = "" },
+    file_read_only = { str = "[-]", icon = "" },
     hl = status.hl.get_attributes("winbar", true),
     surround = false,
     unique_path = {},
   },
   -- add a component to show breadcrumbs
   status.component.builder {
-    condition = function() return status.condition.is_active() end,
+    condition = function() return status.condition.is_active() and vim.g.breadcrumbs end,
     init = breadcrumbs_init()
   }
 }
