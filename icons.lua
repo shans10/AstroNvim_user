@@ -42,6 +42,7 @@ elseif heirline_theme == "nvchad" then
   icons.GitDelete = ""
 
 elseif heirline_theme == "simple" then
+  icons.ActiveTS = ""
   icons.GitBranch = ""
   icons.GitAdd = "+"
   icons.GitChange = "~"

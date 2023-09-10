@@ -1,9 +1,5 @@
 local is_available = require "astronvim.utils".is_available
 local status = require "astronvim.utils.status"
-local separators = {
-  left = { "", " " }, -- separator for the left side of the statusline
-  right = { " ", "" } -- separator for the right side of the statusline
-}
 
 -- Mode text and highlights
 local modes = {
@@ -96,7 +92,7 @@ return {
   -- add the vim mode component
   status.component.builder {
     hl = mode_hl,
-    flexible = 3,
+    flexible = 1,
     {
       provider = mode_text(),
       update = {
@@ -113,20 +109,18 @@ return {
     {
       condition = is_valid_file_condition,
       status.component.file_info {
-        -- enable the file_icon and disable the highlighting based on filetype
-        file_icon = { hl = status.hl.file_icon "statusline", padding = { left = 0, right = 1 } },
+        file_icon = false,
         filename = { fallback = "Empty" },
         file_modified = { str = "[+]", icon = "" },
         file_read_only = { str = "[-]", icon = "" },
-        surround = { separator = separators.left, condition = false },
         unique_path = {},
       },
     },
-    status.component.file_info { file_icon = false, filetype = {}, filename = false, file_modified = false, file_read_only = false },
+    -- status.component.file_info { file_icon = false, filetype = {}, filename = false, file_modified = false, file_read_only = false },
   },
   -- add a seperator before git components
   status.component.builder {
-    condition = status.condition.is_git_repo or status.condition.git_changed,
+    condition = status.condition.is_git_repo,
     provider = status.provider.str { str = "⎪", padding = { right = 1 } }
   },
   -- add a component for the current git branch if it exists and use no separator for the sections
@@ -137,7 +131,7 @@ return {
   },
   -- add a component for the current git diff if it exists and use no separator for the sections
   status.component.builder {
-    flexible = 1,
+    flexible = 2,
     {
       status.component.git_diff {
         added = { icon = { kind = "GitAdd", padding = { left = 1, right = 0 } } },
@@ -172,7 +166,7 @@ return {
   -- add a component for the current diagnostics if it exists
   status.component.builder {
     hl = { fg = "fg" },
-    flexible = 1,
+    flexible = 4,
     {
       { provider = status.provider.diagnostics { severity = "ERROR" }, hl = { fg = "diag_ERROR" } },
       {
@@ -205,29 +199,52 @@ return {
   -- add component to show lsp status text if lsp is active
   status.component.builder {
     condition = status.condition.lsp_attached,
-    provider = status.provider.str { str = "[LSP]", padding = { left = 1, right = 0 } },
-    on_click = {
-      name = "heirline_lsp",
-      callback = function()
-        vim.defer_fn(function() vim.cmd.LspInfo() end, 100)
-      end,
+    flexible = 3,
+    {
+      provider = status.provider.str { str = "[LSP]", padding = { left = 1, right = 0 } },
+      on_click = {
+        name = "heirline_lsp",
+        callback = function()
+          vim.defer_fn(function() vim.cmd.LspInfo() end, 100)
+        end,
+      },
+      update = {
+        "LspAttach",
+        "LspDetach",
+        "BufEnter",
+        callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
+      },
     },
-    update = {
-      "LspAttach",
-      "LspDetach",
-      "BufEnter",
-      callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
-    },
+    { provider = "" }
   },
   -- add treesitter component
-  status. component.treesitter {
-    str = { str = " ", icon = { kind = "ActiveTS1", padding = { left = 1 } } },
-    surround = { separator = "none", },
+  status.component.builder {
+    flexible = 3,
+    status. component.treesitter {
+      str = { str = " ", icon = { kind = "ActiveTS" } },
+      surround = { separator = "none", },
+    },
+    { provider = "" }
   },
   -- add a seperator between components
   status.component.builder {
-    condition = status.condition.lsp_attached,
-    provider = status.provider.str { str = "⎪", padding = { right = 1 } }
+    condition = status.condition.lsp_attached or status.condition.treesitter_available,
+    flexible = 3,
+    { provider = status.provider.str { str = "⎪" } },
+    { provider = "" }
+  },
+  -- add a component to show filetype
+  status.component.file_info {
+    filetype = {},
+    filename = false,
+    file_modified = false,
+    file_read_only = false,
+    surround = { separator = "none" }
+  },
+  -- add a seperator between components
+  status.component.builder {
+    condition = status.condition.has_filetype,
+    provider = status.provider.str { str = "⎪", padding = { left = 1, right = 1 } }
   },
   -- add a ruler navigation component
   status.component.builder {
@@ -236,19 +253,10 @@ return {
   },
   -- add a percentage navigation component
   status.component.builder {
-    flexible = 2,
+    flexible = 5,
     {
       { provider = status.provider.str { str = "⎪" } },
-      { provider = " %L ↓%P " },
-    },
-  { provider = "" }
-  },
-  -- add a component to show fileformat
-  status.component.builder {
-    flexible = 2,
-    {
-      { provider = status.provider.str { str = "⎪", padding = { right = 1 } } },
-      { provider = function() return vim.bo.fileformat .. " " end },
+      { provider = " %P " },
     },
     { provider = "" }
   },
