@@ -15,7 +15,23 @@ return {
 
     -- Override winbar configuration
     if (theme == "lunarvim" or theme == nil) and vim.o.stal == 0 then
-      opts.winbar = require "user.plugins.heirline.winbar"
+      local status = require "astronvim.utils.status"
+      opts.winbar[2] = {
+        status.component.file_info { -- add file_info to breadcrumbs
+          file_icon = { hl = status.hl.filetype_color, padding = { left = 1 } },
+          file_modified = { str = "[+]", icon = "" },
+          file_read_only = { str = "[-]", icon = "" },
+          hl = status.hl.get_attributes("winbar", true),
+          surround = false,
+        },
+        status.component.breadcrumbs {
+          condition = function() return status.condition.aerial_available() and vim.g.breadcrumbs end,
+          icon = { hl = true },
+          hl = status.hl.get_attributes("winbar", true),
+          prefix = true,
+          padding = { left = 0 },
+        },
+      }
     elseif not vim.g.winbar_enabled then
       opts.winbar = nil
     end

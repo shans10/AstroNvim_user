@@ -1,8 +1,10 @@
 return {
   opt = {
+    -- cmdheight = 1,
     list = true, -- enable whitespace rendering
     -- listchars = vim.opt.listchars:append({ tab = '› ', trail = '•', lead = '.', extends = '#', nbsp = '.' }), -- change whitespace characters
     listchars = vim.opt.listchars:append({ tab = '› ', trail = '•' }), -- change whitespace characters
+    -- showmode = true,
     showtabline = 0, -- disable tabline
     swapfile = false,
     title = true, -- enable neovim to set terminal title
