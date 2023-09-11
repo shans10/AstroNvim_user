@@ -20,7 +20,7 @@ end
 local function mode_text()
   return function()
     local text = status.env.modes[vim.fn.mode()][1]
-    return status.utils.stylize("-- " .. text .. " --", { padding = { left = 1, right = 2 } })
+    return status.utils.stylize("-- " .. text .. " --", { padding = { left = 1, right = 3 } })
   end
 end
 
@@ -67,15 +67,13 @@ return {
       condition = is_valid_file_condition,
       flexible = 1,
       status.component.file_info {
-        -- file_icon = false,
-        file_icon = { hl = status.hl.file_icon "statusline", padding = { left = 1, right = 1 } },
+        file_icon = false,
         filename = { fallback = "Empty", modify = ":~:." },
         file_modified = { str = "[+]", icon = "" },
         file_read_only = { str = "[-]", icon = "" },
       },
       status.component.file_info {
-        -- file_icon = false,
-        file_icon = { hl = status.hl.file_icon "statusline", padding = { left = 1, right = 1 } },
+        file_icon = false,
         filename = { fallback = "Empty" },
         file_modified = { str = "[+]", icon = "" },
         file_read_only = { str = "[-]", icon = "" },

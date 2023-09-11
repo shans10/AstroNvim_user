@@ -41,12 +41,20 @@ elseif heirline_theme == "nvchad" then
   icons.GitChange = ""
   icons.GitDelete = ""
 
+-- Simple theme
 elseif heirline_theme == "simple" then
   icons.ActiveTS = ""
   icons.GitBranch = ""
   icons.GitAdd = "+"
   icons.GitChange = "~"
   icons.GitDelete = "-"
+
+-- Minimal theme
+elseif heirline_theme == "minimal" then
+  icons.DiagnosticError = "x"
+  icons.DiagnosticHint = "?"
+  icons.DiagnosticInfo = "i"
+  icons.DiagnosticWarn = "!"
 end
 
 return icons

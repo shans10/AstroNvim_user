@@ -1,6 +1,6 @@
 return {
   opt = {
-    -- cmdheight = 1,
+    cmdheight = 1,
     list = true, -- enable whitespace rendering
     -- listchars = vim.opt.listchars:append({ tab = '› ', trail = '•', lead = '.', extends = '#', nbsp = '.' }), -- change whitespace characters
     listchars = vim.opt.listchars:append({ tab = '› ', trail = '•' }), -- change whitespace characters
