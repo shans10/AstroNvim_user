@@ -11,13 +11,8 @@ return function()
     HighlightURL = { underline = true },
     WinBar = { fg = grey },
     WinBarNC = { fg = grey },
+
     -- Transparency
-    -- CursorLine = { bg = "NONE" },
-    -- EndOfBuffer = { bg = "NONE" },
-    -- NeoTreeNormal = { bg = "NONE" },
-    -- NeoTreeNormalNC = { bg = "NONE" },
-    -- Normal = { bg = "NONE" },
-    -- NormalFloat = { bg = "NONE" },
     NormalNC = { bg = "NONE" },
   }
 end

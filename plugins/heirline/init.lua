@@ -2,7 +2,7 @@ return {
   "rebelot/heirline.nvim",
   opts = function(_, opts)
     -- List of supported themes to match with currently selected theme
-    local themes = { ["doom"] = true,["lunarvim"] = true,["nvchad"] = true, ["simple"] = true }
+    local themes = { ["doom"] = true,["lunarvim"] = true, ["minimal"] = true,["nvchad"] = true, ["simple"] = true }
 
     -- Get current statusline theme, set it to "astronvim" if it is nil
     local theme = vim.g.heirline_theme
