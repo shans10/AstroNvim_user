@@ -138,12 +138,12 @@ return {
   status.component.builder {
     {
       provider = status.provider.ruler { padding = { left = 1, right = 1 } },
-      hl = { fg = "ruler_fg", bg = "ruler_bg" }
+      hl = { fg = "ruler_fg", bg = "ruler_bg" },
+      update = { "CursorMoved", "CursorMovedI", "BufEnter" },
     },
     {
       provider = " %P/%L ",
       hl = mode_hl
     },
-    update = { "CursorMoved", "CursorMovedI", "BufEnter" },
   }
 }

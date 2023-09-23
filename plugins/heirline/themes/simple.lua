@@ -68,19 +68,11 @@ local function is_valid_file_condition(self)
   }, bufnr)
 end
 
--- A provider function to get current mode text
+-- A provider function to get current mode text shortened
 local function mode_text()
   return function()
-    local text = status.env.modes[vim.fn.mode()][1]
-    return status.utils.stylize("-- " .. text .. " --", { padding = { left = 1, right = 2 } })
-  end
-end
-
--- A provider function to get current mode text shortened
-local function mode_text_short()
-  return function()
     local text = modes[vim.fn.mode()][1]
-    return status.utils.stylize(text, { padding = { left = 1, right = 2 } })
+    return status.utils.stylize(text, { padding = { right = 3 } })
   end
 end
 
@@ -89,19 +81,21 @@ return {
   -- default highlight for the entire statusline
   hl = { fg = "fg", bg = "bg" },
 
+  -- add a bar on left corner before mode
+  status.component.builder {
+    hl = { fg = "normal" },
+    provider = require("astronvim.utils").get_icon "Bar",
+    surround = { separator = "left" }
+  },
   -- add the vim mode component
   status.component.builder {
     hl = mode_hl,
-    flexible = 1,
-    {
-      provider = mode_text(),
-      update = {
-        "ModeChanged",
-        pattern = "*:*",
-        callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
-      },
+    provider = mode_text(),
+    update = {
+      "ModeChanged",
+      pattern = "*:*",
+      callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
     },
-    { provider = mode_text_short() },
   },
   -- add a section for the currently opened file information
   status.component.builder {

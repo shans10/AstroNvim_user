@@ -20,7 +20,8 @@ end
 local function mode_text()
   return function()
     local text = status.env.modes[vim.fn.mode()][1]
-    return status.utils.stylize("-- " .. text .. " --", { padding = { left = 1, right = 3 } })
+    -- return status.utils.stylize("-- " .. text .. " --", { padding = { left = 1, right = 3 } })
+    return status.utils.stylize(text, { padding = { left = 1, right = 3 } })
   end
 end
 
