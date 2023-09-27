@@ -2,6 +2,7 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
+    enabled = false,
     opts = {
       flavour = "mocha",
       transparent_background = true,
@@ -24,27 +25,14 @@ return {
   },
   {
     "shaunsingh/nord.nvim",
-    dependencies = {
-      "xiyaowong/transparent.nvim",
-      event = "UIEnter",
-      opts = {
-        groups = {
-          'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
-          'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
-          'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
-          'SignColumn', 'CursorLineNr', 'EndOfBuffer', 'WhichKeyFloat', 'NormalFloat',
-          'FloatBorder'
-        },
-      },
-    },
     config = function()
       vim.g.nord_contrast = true
       vim.g.nord_borders = true
-      vim.g.nord_disable_background = true
       vim.g.nord_uniform_diff_background = true
 
-      -- Disable semantic highlights
-      vim.highlight.priorities.semantic_tokens = 95
+      if not vim.g.neovide and not vim.g.transparent_enabled then
+        vim.cmd [[TransparentEnable]]
+      end
     end,
   }
 }

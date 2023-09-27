@@ -6,7 +6,7 @@ local status = require "astronvim.utils.status"
 -- A highlight function to return highlight based on vi mode
 local function mode_hl()
   local mode_bg = status.env.modes[vim.fn.mode()][2]
-  return { fg = "#000000", bg = mode_bg }
+  return { fg = "bg", bg = mode_bg }
 end
 
 -- A provider function for showing the connected LSP client names
@@ -49,10 +49,10 @@ return {
   -- add the vim mode component
   status.component.builder {
     -- set foreground highlight for mode icon
-    hl = { fg = "bg" },
-    -- set mode icon and hl
+    hl = { fg = "bg", bold = true },
+    -- set mode text and hl
     {
-      provider = status.utils.pad_string(get_icon "Mode", { left = 1, right = 1 }),
+      provider = status.provider.mode_text { padding = { left = 1, right = 1 } },
       hl = mode_hl
     },
     update = {
@@ -62,26 +62,10 @@ return {
     },
   },
   -- add a component for the current git branch if it exists and use no separator for the sections
-  status.component.builder {
-    condition = status.condition.is_git_repo,
-    hl = { fg = "git_branch_fg", bg = "git_branch_bg" },
-    {
-      provider = status.utils.pad_string(get_icon "GitBranch", { left = 1, right = 1 }),
-      hl = { fg = "git_branch_icon" },
-    },
-    {
-      provider = status.provider.git_branch { padding = { right = 1 } },
-    },
-    on_click = {
-      name = "heirline_branch",
-      callback = function()
-        if is_available "telescope.nvim" then
-          vim.defer_fn(function() require("telescope.builtin").git_branches() end, 100)
-        end
-      end,
-    },
-    update = { "User", pattern = "GitSignsUpdate" },
-    init = status.init.update_events { "BufEnter" },
+  status.component.git_branch {
+    git_branch = { icon = { kind = "GitBranch", padding = { left = 1, right = 1 } } },
+    padding = { right = 1 },
+    surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
   },
   -- add a component for the current git diff if it exists and use no separator for the sections
   status.component.git_diff { padding = { left = 1 }, surround = { separator = "none" } },

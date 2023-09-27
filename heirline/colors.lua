@@ -42,7 +42,7 @@ return function(colors)
     colors.git_added = comment_fg
     colors.git_changed = comment_fg
     colors.git_removed = comment_fg
-    colors.blank_bg = get_hlgroup("WildMenu").bg
+    colors.blank_bg = comment_fg
     colors.file_info_bg = get_hlgroup("Visual").bg
     colors.nav_icon_bg = get_hlgroup("String").fg
     colors.nav_fg = colors.nav_icon_bg

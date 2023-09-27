@@ -72,7 +72,7 @@ maps.n["<leader>bp"] = {
 maps.n["<leader>bs"] = { "<cmd>w<cr>", desc = "Save buffer" }
 maps.n["<leader>bS"] = { "<cmd>wa<cr>", desc = "Save all buffers" }
 maps.n["<leader>bt"] = { "<cmd>%s/\\s\\+$//e | noh<cr>", desc = "Remove trailing whitespaces" }
-if is_available("suda.vim") then
+if is_available "suda.vim" then
   maps.n["<leader>bu"] = { "<cmd>SudaWrite<cr>", desc = "Save buffer as root" }
 end
 maps.n["<leader>by"] = { "ggVGy", desc = "Yank buffer" }
@@ -163,13 +163,14 @@ end
 maps.n["<leader>uA"] = { function() require("astronvim.utils.ui").toggle_autoformat() end, desc = "Toggle autoformatting" }
 
 -- Trouble
-if is_available("trouble.nvim") then
+if is_available "trouble.nvim" then
     maps.n["<leader>x"] = { desc = "󰒡 Trouble" }
-    maps.n["<leader>xx"] = { "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics" }
-    maps.n["<leader>xX"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" }
-    maps.n["<leader>xl"] = { "<cmd>TroubleToggle loclist<cr>", desc = "Location List" }
-    maps.n["<leader>xq"] = { "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List" }
-    maps.n["<leader>xT"] = { "<cmd>TodoTrouble<cr>", desc = "TODOs" }
+    maps.n["<leader>xx"] = { "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document diagnostics" }
+    maps.n["<leader>xX"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace diagnostics" }
+    maps.n["<leader>xl"] = { "<cmd>TroubleToggle loclist<cr>", desc = "Location list" }
+    maps.n["<leader>xq"] = { "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix list" }
+    maps.n["<leader>xr"] = { "<cmd>TroubleToggle lsp_references<cr>", desc = "Lsp references" }
+    maps.n["<leader>xt"] = { "<cmd>TodoTrouble<cr>", desc = "TODOs" }
 end
 
 --- INSERT MODE ---

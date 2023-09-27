@@ -28,18 +28,21 @@ if heirline_theme == "doom" then
 -- Lunarvim theme
 elseif heirline_theme == "lunarvim" then
   icons.DefaultFile = ""
+  icons.GitAdd = ""
+  icons.GitChange = ""
+  icons.GitDelete = ""
   icons.Mode = "󰀘"
-  icons.Separator = "|"
+  icons.Separator = "⎪"
   icons.Shiftwidth = "󰌒"
 
 -- Nvchad theme
 elseif heirline_theme == "nvchad" then
-  icons.VimIcon = ""
-  icons.ScrollText = ""
   icons.GitBranch = ""
   icons.GitAdd = ""
   icons.GitChange = ""
   icons.GitDelete = ""
+  icons.ScrollText = ""
+  icons.VimIcon = ""
 
 -- Simple theme
 elseif heirline_theme == "simple" then
