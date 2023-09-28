@@ -1,6 +1,7 @@
 return {
   "xiyaowong/transparent.nvim",
   lazy = false,
+  cond = not vim.g.neovide,
   opts = {
     groups = {
       "Normal",

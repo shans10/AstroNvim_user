@@ -1,6 +1,8 @@
 return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
+    "debugloop/telescope-undo.nvim",
+    "jvgrootveld/telescope-zoxide",
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-project.nvim"
   },
@@ -30,6 +32,16 @@ return {
           theme = "dropdown",
           order_by = "asc",
           sync_with_nvim_tree = true,
+        },
+        zoxide = {
+          mappings = {
+            ["<C-b>"] = {
+              keepinsert = true,
+              action = function(selection)
+                require("telescope").extensions.file_browser.file_browser({ cwd = selection.path })
+              end
+            },
+          }
         }
       },
       pickers = {
@@ -60,5 +72,7 @@ return {
     local telescope = require "telescope"
     telescope.load_extension "file_browser"
     telescope.load_extension "project"
+    telescope.load_extension "undo"
+    telescope.load_extension "zoxide"
   end,
 }

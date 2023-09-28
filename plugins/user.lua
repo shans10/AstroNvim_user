@@ -11,16 +11,19 @@ return {
   },
   {
     "lambdalisue/suda.vim",
-    event = "User AstroFile",
+    cmd = {
+      "SudaRead",
+      "SudaWrite",
+    },
     enabled = function() return not vim.g.win32 end
   },
   {
     "echasnovski/mini.move",
     keys = {
-      { "<M-l>", mode = { "n", "v" } },
-      { "<M-k>", mode = { "n", "v" } },
-      { "<M-j>", mode = { "n", "v" } },
-      { "<M-h>", mode = { "n", "v" } },
+      { "<A-h>", mode = { "n", "v" }, desc = "Move line/selection left" },
+      { "<A-j>", mode = { "n", "v" }, desc = "Move line/selection down" },
+      { "<A-k>", mode = { "n", "v" }, desc = "Move line/selection up" },
+      { "<A-l>", mode = { "n", "v" }, desc = "Move line/selection right" },
     },
     opts = {},
   },
@@ -55,7 +58,8 @@ return {
     opts = { n_lines = 200 },
   },
   {
-    "mbbill/undotree",
-    event = "User AstroFile",
-  }
+    "gbprod/cutlass.nvim",
+    lazy = false,
+    opts = { cut_key = "x", }
+  },
 }

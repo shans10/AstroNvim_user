@@ -2,10 +2,10 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    enabled = false,
+    -- enabled = false,
     opts = {
       flavour = "mocha",
-      transparent_background = true,
+      -- transparent_background = true,
       dim_inactive = { enabled = true, percentage = 0.35 },
       integrations = {
         aerial = true,
@@ -25,14 +25,10 @@ return {
   },
   {
     "shaunsingh/nord.nvim",
-    config = function()
+    init = function()
       vim.g.nord_contrast = true
       vim.g.nord_borders = true
       vim.g.nord_uniform_diff_background = true
-
-      if not vim.g.neovide and not vim.g.transparent_enabled then
-        vim.cmd [[TransparentEnable]]
-      end
     end,
   }
 }

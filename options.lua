@@ -4,11 +4,12 @@ return {
     list = true, -- enable whitespace rendering
     -- listchars = vim.opt.listchars:append({ tab = '› ', trail = '•', lead = '.', extends = '#', nbsp = '.' }), -- change whitespace characters
     listchars = vim.opt.listchars:append({ tab = '› ', trail = '•' }), -- change whitespace characters
+    scrolloff = 9,
     -- showmode = true,
     showtabline = 0, -- disable tabline
     swapfile = false,
     title = true, -- enable neovim to set terminal title
-    titlestring = "Neovim: %f", -- set titlestring to be displayed
+    titlestring = [[%{substitute(getcwd(), $HOME, '~', '')} ~ AstroNvim]], -- set titlestring to be displayed
     whichwrap = vim.opt.whichwrap:append "<,>[,],h,l", -- automatically go to next line
   },
   g = {

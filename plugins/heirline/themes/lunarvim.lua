@@ -1,12 +1,11 @@
 local get_icon = require("astronvim.utils").get_icon
 local separator = get_icon "Separator" -- separator icon
-local is_available = require "astronvim.utils".is_available
 local status = require "astronvim.utils.status"
 
 -- A highlight function to return highlight based on vi mode
 local function mode_hl()
   local mode_bg = status.env.modes[vim.fn.mode()][2]
-  return { fg = "bg", bg = mode_bg }
+  return { fg = "git_branch_bg", bg = mode_bg }
 end
 
 -- A provider function for showing the connected LSP client names
@@ -77,6 +76,8 @@ return {
   -- fill the rest of the statusline
   -- the elements after this will appear on the right of the statusline
   status.component.fill(),
+  -- statusline is cut here when there is not enough space
+  { provider = '%<'},
   -- add a component to show lsp progress
   status.component.lsp { lsp_client_names = false, surround = { separator = "right", color = "bg" } },
   -- add a component for the current diagnostics if it exists
@@ -87,21 +88,29 @@ return {
     hl = { bold = true },
     {
       condition = status.condition.lsp_attached,
-      {
-        flexible = 2,
-        {
-          provider = lsp_clients_provider,
-        },
-        { provider = status.provider.str { str = "[LS]", padding = { left = 1, right = 1 } } },
-      },
+      flexible = 1,
+      { provider = lsp_clients_provider },
+      { provider = status.provider.str { str = "[LS]", padding = { left = 1, right = 1 } } },
     },
-    { provider = status.provider.str { str = "LS Inactive", padding = { left = 1, right = 1 } } },
+    {
+      flexible = 1,
+      { provider = status.provider.str { str = "LS Inactive", padding = { left = 1, right = 1 } } },
+      { provider = "" }
+    },
     on_click = {
       name = "heirline_lsp",
       callback = function()
         vim.defer_fn(function() vim.cmd.LspInfo() end, 100)
       end,
     },
+  },
+  -- add a component to show treesitter status
+  status.component.builder {
+    condition = status.condition.treesitter_available,
+    hl = status.hl.get_attributes "treesitter",
+    update = { "OptionSet", pattern = "syntax" },
+    init = status.init.update_events { "BufEnter" },
+    provider = require("astronvim.utils").get_icon("ActiveTS", 1),
   },
   -- add a component to show current shiftwidth(indent spaces) of a file
   status.component.builder {

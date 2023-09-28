@@ -1,5 +1,3 @@
-local is_available = require "astronvim.utils".is_available
-
 -- Neovide settings
 if vim.g.neovide then
   -- General
@@ -14,12 +12,6 @@ if vim.g.neovide then
 
   -- Transparency
   vim.g.neovide_transparency = 0.97
-
-  -- Disable transparent.nvim plugin
-  if is_available "transparent.nvim" then
-    vim.cmd "TransparentDisable"
-  end
-
   -- Clear highlight groups
   vim.cmd [[
     hi FloatBorder guibg=none

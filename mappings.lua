@@ -6,7 +6,6 @@ local maps = { i = {}, n = {}, t = {}, v = {}, x = {} }
 --- NORMAL MODE ---
 --
 -- Disable default keybindings
-maps.n["<leader>o"] = false
 maps.n["<leader>b|"] = false
 maps.n["<leader>b\\"] = false
 maps.n["<leader>bb"] = false
@@ -25,7 +24,6 @@ maps.n["<C-u>"] = { "<C-u>zz" }
 
 -- Standard leader-key operations
 maps.n["<leader>."] = { function() require("telescope").extensions.file_browser.file_browser() end, desc = "File browser" }
-maps.n["<leader>U"] = { "<cmd>UndotreeToggle<cr>", desc = "Undotree" }
 maps.n["<leader><C-w>"] = { "<cmd>cd %:p:h<cr>", desc = "Set CWD to current file" }
 
 -- Better search
@@ -79,7 +77,7 @@ maps.n["<leader>by"] = { "ggVGy", desc = "Yank buffer" }
 maps.n["<leader>b<C-s>"] = { desc = get_icon("Sort", 1, true) .. "Sort Buffers" }
 maps.n["<leader>b<C-s>e"] = { function() require("astronvim.utils.buffer").sort "extension" end, desc = "By extension" }
 maps.n["<leader>b<C-s>r"] =
-  { function() require("astronvim.utils.buffer").sort "unique_path" end, desc = "By relative path" }
+{ function() require("astronvim.utils.buffer").sort "unique_path" end, desc = "By relative path" }
 maps.n["<leader>b<C-s>p"] = { function() require("astronvim.utils.buffer").sort "full_path" end, desc = "By full path" }
 maps.n["<leader>b<C-s>i"] = { function() require("astronvim.utils.buffer").sort "bufnr" end, desc = "By buffer number" }
 maps.n["<leader>b<C-s>m"] = { function() require("astronvim.utils.buffer").sort "modified" end, desc = "By modification" }
@@ -149,6 +147,8 @@ if is_available "telescope.nvim" then
     desc = "Find files in CWD"
   }
   maps.n["<leader>fp"] = { function() require("telescope").extensions.project.project() end, desc = "Find projects" }
+  maps.n["<leader>fu"] = { "<cmd>Telescope undo<cr>", desc = "Find undos" }
+  maps.n["<leader>fz"] = { "<cmd>Telescope zoxide list theme=dropdown<cr>", desc = "Find directories" }
 
   -- LSP
   maps.n["<leader>ld"] = {
@@ -164,13 +164,24 @@ maps.n["<leader>uA"] = { function() require("astronvim.utils.ui").toggle_autofor
 
 -- Trouble
 if is_available "trouble.nvim" then
-    maps.n["<leader>x"] = { desc = "󰒡 Trouble" }
-    maps.n["<leader>xx"] = { "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document diagnostics" }
-    maps.n["<leader>xX"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace diagnostics" }
-    maps.n["<leader>xl"] = { "<cmd>TroubleToggle loclist<cr>", desc = "Location list" }
-    maps.n["<leader>xq"] = { "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix list" }
-    maps.n["<leader>xr"] = { "<cmd>TroubleToggle lsp_references<cr>", desc = "Lsp references" }
-    maps.n["<leader>xt"] = { "<cmd>TodoTrouble<cr>", desc = "TODOs" }
+  maps.n["<leader>x"] = { desc = "󰒡 Trouble" }
+  maps.n["<leader>xx"] = { "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document diagnostics" }
+  maps.n["<leader>xX"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace diagnostics" }
+  maps.n["<leader>xl"] = { "<cmd>TroubleToggle loclist<cr>", desc = "Location list" }
+  maps.n["<leader>xq"] = { "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix list" }
+  maps.n["<leader>xr"] = { "<cmd>TroubleToggle lsp_references<cr>", desc = "Lsp references" }
+  maps.n["<leader>xt"] = { "<cmd>TodoTrouble<cr>", desc = "TODOs" }
+end
+
+-- Noice
+if is_available "noice.nvim" then
+  maps.n["<leader>N"] = { desc = "󰒡 Noice" }
+  maps.n["<leader>Nd"] = { "<cmd>Noice disable<cr>", desc = "Disable noice" }
+  maps.n["<leader>ND"] = { "<cmd>Noice dismiss<cr>", desc = "Dismiss all visible messages" }
+  maps.n["<leader>Ne"] = { "<cmd>Noice enable<cr>", desc = "Enable noice" }
+  maps.n["<leader>Nh"] = { "<cmd>Noice history<cr>", desc = "Show message history" }
+  maps.n["<leader>Nl"] = { "<cmd>Noice last<cr>", desc = "Show last message" }
+  maps.n["<leader>Nt"] = { "<cmd>Noice telescope<cr>", desc = "Show message history in telescope" }
 end
 
 --- INSERT MODE ---
@@ -194,10 +205,11 @@ maps.t["<esc><esc>"] = { "<C-\\><C-n>:q<cr>", desc = "Terminal quit" }
 
 --- VISUAL MODE ---
 --
-
 -- Better increment/decrement
 maps.x["+"] = { "g<C-a>", desc = "Increment number" }
 maps.x["-"] = { "g<C-x>", desc = "Decrement number" }
+
+-- Paste over text without losing it
 maps.x["p"] = { [["_dP]], desc = "Paste with preserve" }
 
 return maps

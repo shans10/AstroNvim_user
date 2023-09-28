@@ -1,5 +1,4 @@
 local icons = {
-  ActiveTS1 = "",
   BookMark = "",
   FileNew = "",
   FileRecent = "",
@@ -27,6 +26,7 @@ if heirline_theme == "doom" then
 
 -- Lunarvim theme
 elseif heirline_theme == "lunarvim" then
+  icons.ActiveTS = ""
   icons.DefaultFile = ""
   icons.GitAdd = ""
   icons.GitChange = ""
