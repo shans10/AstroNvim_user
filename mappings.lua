@@ -1,5 +1,6 @@
 local is_available = require "astronvim.utils".is_available
 local get_icon = require "astronvim.utils".get_icon
+local utils = require "user.utils"
 
 local maps = { i = {}, n = {}, t = {}, v = {}, x = {} }
 
@@ -27,8 +28,8 @@ maps.n["<leader>."] = { function() require("telescope").extensions.file_browser.
 maps.n["<leader><C-w>"] = { "<cmd>cd %:p:h<cr>", desc = "Set CWD to current file" }
 
 -- Better search
-maps.n["n"] = { require("user.utils").better_search "n", desc = "Next search" }
-maps.n["N"] = { require("user.utils").better_search "N", desc = "Previous search" }
+maps.n["n"] = { utils.better_search "n", desc = "Next search" }
+maps.n["N"] = { utils.better_search "N", desc = "Previous search" }
 
 -- Better increment/decrement
 maps.n["-"] = { "<C-x>", desc = "Decrement number" }
@@ -58,7 +59,7 @@ maps.n["<leader>ba"] = { "ggVG", desc = "Select all" }
 maps.n["<leader>bd"] = { function() require("astronvim.utils.buffer").close() end, desc = "Delete buffer" }
 maps.n["<leader>bD"] = { function() require("astronvim.utils.buffer").close(0, true) end, desc = "Force delete buffer" }
 maps.n["<leader>bi"] = { "gg=G", desc = "Indent all" }
-maps.n["<leader>bl"] = { require("user.utils").last_buffer(), desc = "Last buffer" }
+maps.n["<leader>bl"] = { utils.last_buffer(), desc = "Last buffer" }
 maps.n["<leader>bn"] = {
   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
   desc = "Next buffer"

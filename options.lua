@@ -9,13 +9,14 @@ return {
     showtabline = 0, -- disable tabline
     swapfile = false,
     title = true, -- enable neovim to set terminal title
-    titlestring = [[%{substitute(getcwd(), $HOME, '~', '')} ~ AstroNvim]], -- set titlestring to be displayed
+    titlestring = [[%{substitute(getcwd(), $HOME, '~', '')} - AstroNvim]], -- set titlestring to be displayed
     whichwrap = vim.opt.whichwrap:append "<,>[,],h,l", -- automatically go to next line
   },
   g = {
     autoformat_enabled = false, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
     breadcrumbs = false, -- disable winbar breadcrumbs(only works with lunarvim and no/default theme)
     heirline_theme = "lunarvim", -- set heirline statusline theme (possible options are doom, lunarvim, minimal, nvchad, simple), comment/remove this option to choose default astronvim statusline
+    user_theme = "nord",
     winbar_enabled = false, -- enable winbar (set false to disable it, removing this option will have no effect)
   }
 }

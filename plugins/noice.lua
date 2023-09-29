@@ -7,9 +7,7 @@ return {
   dependencies = { "MunifTanjim/nui.nvim" },
   opts = function(_, opts)
     return utils.extend_tbl(opts, {
-      messages = {
-        view_search = false, -- view for search count messages. Set to `false` to disable
-      },
+      cmdline = { view = "cmdline" },
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
@@ -25,6 +23,15 @@ return {
         inc_rename = utils.is_available "inc-rename.nvim", -- enables an input dialog for inc-rename.nvim
         lsp_doc_border = true, -- add a border to hover docs and signature help
       },
+      routes = {
+        { filter = { event = "msg_show", find = "^/", ["not"] = { kind = "search_count" } }, opts = { skip = true } }, -- skip searched text message
+      },
+      views = {
+        split = {
+          enter = true,
+          size = "50%",
+        },
+      }
     })
   end,
   init = function()

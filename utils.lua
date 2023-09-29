@@ -13,7 +13,7 @@ function M.last_buffer()
   return function()
     local success, _ = pcall(function() vim.cmd "e #" end)
     if not success then
-      local error = "No other buffer to switch to"
+      local error = "No last buffer found"
       require("astronvim.utils").notify(error, vim.log.levels.ERROR)
     end
   end
