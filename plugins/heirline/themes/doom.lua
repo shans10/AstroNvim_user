@@ -61,6 +61,11 @@ local function is_valid_file_condition(self)
   }, bufnr)
 end
 
+-- A condition function to check if visual mode is active
+local function is_visual_mode_condition()
+  return (vim.fn.mode():find("[Vv]") ~= nil or vim.fn.mode():find("[^V]") ~= nil) and vim.fn.mode():find("[n]") == nil
+end
+
 -- A provider function for current relative path
 local function current_path_provider(opts)
   return function(self)
@@ -210,11 +215,22 @@ return {
     -- use no separator and define the background color
     surround = { separator = "none", color = "file_info_bg" },
   },
+  -- add a component to show number of selected lines
+  status.component.cmd_info {
+    condition = is_visual_mode_condition,
+    hl = { fg = "lines_fg" },
+    macro_recording = false,
+    search_count = false,
+  },
   -- fill the rest of the statusline
   -- the elements after this will appear in the right side of the statusline
   status.component.fill(),
   -- add a component to show lsp progress
-  status.component.lsp { lsp_client_names = false, surround = { separator = "right", color = "bg" } },
+  status.component.lsp {
+    condition = function() return not require("astronvim.utils").is_available("noice.nvim") end,
+    lsp_client_names = false,
+    surround = { separator = "right", color = "bg" }
+  },
   -- add a component for the current diagnostics if it exists
   status.component.builder {
     hl = { fg = "fg" },

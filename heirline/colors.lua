@@ -9,8 +9,10 @@ return function(colors)
 
   -- Doom theme
   if theme == "doom" then
+    local func = get_hlgroup("Function")
     local search = get_hlgroup("IncSearch")
     local typedef = get_hlgroup("TypeDef")
+    colors.lines_fg = func.fg
     colors.search_fg = search.fg
     colors.search_bg = search.bg
     colors.work_dir_fg = typedef.fg
@@ -25,7 +27,7 @@ return function(colors)
     colors.git_branch_icon = constant_fg
     colors.ruler_fg = normal_fg
     colors.ruler_bg = cursorline_bg
-    colors.separator_bg = cursorline_bg
+    colors.separator_fg = cursorline_bg
 
     -- Nvchad theme
   elseif theme == "nvchad" then

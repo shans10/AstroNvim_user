@@ -176,7 +176,7 @@ end
 
 -- Noice
 if is_available "noice.nvim" then
-  maps.n["<leader>N"] = { desc = "󰒡 Noice" }
+  maps.n["<leader>N"] = { desc = "󰰒 Noice" }
   maps.n["<leader>Nd"] = { "<cmd>Noice disable<cr>", desc = "Disable noice" }
   maps.n["<leader>ND"] = { "<cmd>Noice dismiss<cr>", desc = "Dismiss all visible messages" }
   maps.n["<leader>Ne"] = { "<cmd>Noice enable<cr>", desc = "Enable noice" }

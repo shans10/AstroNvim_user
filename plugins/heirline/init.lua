@@ -1,6 +1,9 @@
 return {
   "rebelot/heirline.nvim",
+  optional = true,
   opts = function(_, opts)
+    local is_available = require "astronvim.utils".is_available
+
     -- List of supported themes to match with currently selected theme
     local themes = { ["doom"] = true,["lunarvim"] = true, ["minimal"] = true,["nvchad"] = true, ["simple"] = true }
 
@@ -8,13 +11,16 @@ return {
     local theme = vim.g.heirline_theme
 
     -- Override statusline configuration
+    -- Disable statusline when lualine is installed
+    if is_available "lualine.nvim" then
+      opts.statusline = nil
     -- Set statusline based on chosen theme
-    if themes[theme] then
+    elseif themes[theme] then
       opts.statusline = require("user.plugins.heirline.themes." .. theme)
     end
 
     -- Override winbar configuration
-    if (theme == "lunarvim" or theme == nil) and vim.o.stal == 0 then
+    if theme == nil and vim.o.stal == 0 and not is_available "lualine.nvim" then
       local status = require "astronvim.utils.status"
       opts.winbar[2] = {
         -- show the path to the file relative to the working directory
@@ -35,6 +41,21 @@ return {
           prefix = true,
           padding = { left = 0 },
         },
+        -- fill the rest of the winbar
+        -- the elements after this will appear in the right corner of the statusline
+        status.component.fill(),
+        -- status.component.builder {
+        --   condition = function()
+        --     return vim.fn.mode():find("[Vv]") ~= nil
+        --   end,
+        --   provider = function()
+        --     local starts = vim.fn.line("v")
+        --     local ends = vim.fn.line(".")
+        --     local count = starts <= ends and ends - starts + 1 or starts - ends + 1
+        --     return count .. "L "
+        --   end,
+        --   surround = { separator = "none" }
+        -- },
         -- add a component to show relative path of current file
         -- status.component.builder {
         --   condition = function() return not vim.g.breadcrumbs end,

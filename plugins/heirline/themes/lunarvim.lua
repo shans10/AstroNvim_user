@@ -8,6 +8,15 @@ local function mode_hl()
   return { fg = "git_branch_bg", bg = mode_bg }
 end
 
+-- A condition function if buffer is a valid file
+local function is_valid_file_condition(self)
+  local bufnr = self and self.bufnr or 0
+  return not status.condition.buffer_matches ({
+    buftype = { "nofile", "prompt", "quickfix" },
+    filetype = { "^git.*", "fugitive", "toggleterm", "NvimTree" },
+  }, bufnr)
+end
+
 -- A provider function for showing the connected LSP client names
 local function lsp_clients_provider(self)
   local truncate = 0.25
@@ -32,12 +41,12 @@ local function lsp_clients_provider(self)
 end
 
 -- A provider function for showing current file's shiftwidth
-local function shiftwidth_provider()
-  local shiftwidth = vim.api.nvim_buf_get_option(0, "shiftwidth")
-  return status.utils.stylize(
-    status.utils.pad_string(get_icon "Shiftwidth", { right = 1 }) .. shiftwidth, { padding = { right = 1 } }
-  )
-end
+-- local function shiftwidth_provider()
+--   local shiftwidth = vim.api.nvim_buf_get_option(0, "shiftwidth")
+--   return status.utils.stylize(
+--     status.utils.pad_string(get_icon "Shiftwidth", { right = 1 }) .. shiftwidth, { padding = { right = 1 } }
+--   )
+-- end
 
 -- Statusline components table
 return {
@@ -66,20 +75,41 @@ return {
     padding = { right = 1 },
     surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
   },
+  -- add a section for the currently opened file information
+  status.component.builder {
+    condition = function()
+      return vim.o.showtabline == 0 and is_valid_file_condition()
+    end,
+    { provider = " " },
+    status.component.file_info {
+      file_icon = false,
+      filename = {},
+      file_modified = { str = "[+]", icon = "" },
+      file_read_only = { str = "[-]", icon = "" },
+      unique_path = {},
+      padding = { right = 1 },
+      surround = { separator = "none", condition = false },
+    },
+  },
+  -- { provider = status.utils.pad_string(separator, { left = 1, right = 1 }), hl = { fg = "separator_fg" } },
   -- add a component for the current git diff if it exists and use no separator for the sections
-  status.component.git_diff { padding = { left = 1 }, surround = { separator = "none" } },
+  status.component.git_diff(),
   -- fill the rest of the statusline
   -- the elements after this will appear in the middle of the statusline
   status.component.fill(),
   -- add a component for search count and macro recording status
-  status.component.cmd_info(),
+  status.component.cmd_info { showcmd = false },
   -- fill the rest of the statusline
   -- the elements after this will appear on the right of the statusline
   status.component.fill(),
   -- statusline is cut here when there is not enough space
-  { provider = '%<'},
+  { provider = "%<" },
   -- add a component to show lsp progress
-  status.component.lsp { lsp_client_names = false, surround = { separator = "right", color = "bg" } },
+  status.component.lsp {
+    condition = function() return not require("astronvim.utils").is_available("noice.nvim") end,
+    lsp_client_names = false,
+    surround = { separator = "right", color = "bg" }
+  },
   -- add a component for the current diagnostics if it exists
   status.component.diagnostics { surround = { separator = "right" }, },
   -- add a component to show running lsp clients
@@ -113,15 +143,16 @@ return {
     provider = require("astronvim.utils").get_icon("ActiveTS", 1),
   },
   -- add a component to show current shiftwidth(indent spaces) of a file
-  status.component.builder {
-    { provider = status.utils.pad_string(separator, { right = 1 }), hl = { fg = "separator_bg" } },
-    { provider = shiftwidth_provider }
-  },
+  -- status.component.builder {
+  --   { provider = status.utils.pad_string(separator, { right = 1 }), hl = { fg = "separator_fg" } },
+  --   { provider = shiftwidth_provider }
+  -- },
   -- add a section to show opened filetype
   status.component.builder {
     condition = status.condition.has_filetype,
-    { provider = status.utils.pad_string(separator, { right = 1 }), hl = { fg = "separator_bg" } },
+    { provider = status.utils.pad_string(separator, { right = 1 }), hl = { fg = "separator_fg" } },
     {
+      condition = is_valid_file_condition,
       provider = status.provider.file_icon { padding = { right = 1 } },
       hl = status.hl.filetype_color
     },
