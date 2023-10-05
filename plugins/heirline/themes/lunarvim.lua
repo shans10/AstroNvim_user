@@ -52,7 +52,6 @@ end
 return {
   -- default highlight for the entire statusline
   hl = { fg = "fg", bg = "bg" },
-  -- each element following is a component in st module
 
   -- add the vim mode component
   status.component.builder {
@@ -70,8 +69,9 @@ return {
     },
   },
   -- add a component for the current git branch if it exists and use no separator for the sections
-  status.component.git_branch {
-    git_branch = { icon = { kind = "GitBranch", padding = { left = 1, right = 1 } } },
+  status.component.builder {
+    { provider = status.utils.pad_string(get_icon "GitBranch", { left = 1, right = 1 }), hl = { fg = "git_branch_icon" } },
+    { provider = status.provider.git_branch {} },
     padding = { right = 1 },
     surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
   },
@@ -144,7 +144,7 @@ return {
     hl = status.hl.get_attributes "treesitter",
     update = { "OptionSet", pattern = "syntax" },
     init = status.init.update_events { "BufEnter" },
-    provider = require("astronvim.utils").get_icon("ActiveTS", 1),
+    provider = get_icon("ActiveTS", 1),
   },
   -- add a component to show current shiftwidth(indent spaces) of a file
   -- status.component.builder {
