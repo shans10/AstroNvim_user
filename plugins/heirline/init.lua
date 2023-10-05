@@ -5,7 +5,7 @@ return {
     local is_available = require "astronvim.utils".is_available
 
     -- List of supported themes to match with currently selected theme
-    local themes = { ["doom"] = true,["lunarvim"] = true, ["minimal"] = true,["nvchad"] = true, ["simple"] = true }
+    local themes = { ["doom"] = true,["lunarvim"] = true, ["minimal"] = true,["nvchad"] = true }
 
     -- Get current statusline theme, set it to "astronvim" if it is nil
     local theme = vim.g.heirline_theme
@@ -20,16 +20,20 @@ return {
     end
 
     -- Override winbar configuration
-    if theme == nil and vim.o.stal == 0 and not is_available "lualine.nvim" then
+    if (theme == nil or not themes[theme]) and vim.o.stal == 0 and not is_available "lualine.nvim" then
       local status = require "astronvim.utils.status"
       opts.winbar[2] = {
         -- show the path to the file relative to the working directory
-        status.component.separated_path { path_func = status.provider.filename { modify = ":.:h" } },
+        status.component.separated_path {
+          condition = function() return not vim.g.breadcrumbs end,
+          path_func = status.provider.filename { modify = ":.:h" }
+        },
         -- add a component to show current filename
         status.component.file_info {
           file_icon = { hl = status.hl.filetype_color, padding = { left = 0 } },
           file_modified = { str = "[+]", icon = "" },
           file_read_only = { str = "[-]", icon = "" },
+          -- unique_path = {},
           hl = status.hl.get_attributes("winbar", true),
           surround = false,
         },
@@ -43,7 +47,7 @@ return {
         },
         -- fill the rest of the winbar
         -- the elements after this will appear in the right corner of the statusline
-        status.component.fill(),
+        -- status.component.fill(),
         -- status.component.builder {
         --   condition = function()
         --     return vim.fn.mode():find("[Vv]") ~= nil

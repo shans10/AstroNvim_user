@@ -2,6 +2,52 @@ local get_icon = require("astronvim.utils").get_icon
 local is_available = require "astronvim.utils".is_available
 local status = require "astronvim.utils.status"
 
+-- Mode text and highlights
+-- local modes = {
+--   ["n"] = { "<N>", "normal" },
+--   ["no"] = { "<OP>", "normal" },
+--   ["nov"] = { "<OP>", "normal" },
+--   ["noV"] = { "<OP>", "normal" },
+--   ["no"] = { "<OP>", "normal" },
+--   ["niI"] = { "<N>", "normal" },
+--   ["niR"] = { "<N>", "normal" },
+--   ["niV"] = { "<N>", "normal" },
+--   ["i"] = { "<I>", "insert" },
+--   ["ic"] = { "<I>", "insert" },
+--   ["ix"] = { "<I>", "insert" },
+--   ["t"] = { "<T>", "terminal" },
+--   ["nt"] = { "<T>", "terminal" },
+--   ["v"] = { "<V>", "visual" },
+--   ["vs"] = { "<V>", "visual" },
+--   ["V"] = { "<Vl>", "visual" },
+--   ["Vs"] = { "<Vl>", "visual" },
+--   [""] = { "<Vb>", "visual" },
+--   ["s"] = { "<Vb>", "visual" },
+--   ["R"] = { "<R>", "replace" },
+--   ["Rc"] = { "<R>", "replace" },
+--   ["Rx"] = { "<R>", "replace" },
+--   ["Rv"] = { "V-REPLACE", "replace" },
+--   ["s"] = { "<S>", "visual" },
+--   ["S"] = { "<S>", "visual" },
+--   [""] = { "<Vb>", "visual" },
+--   ["c"] = { "<COMMAND>", "command" },
+--   ["cv"] = { "<COMMAND>", "command" },
+--   ["ce"] = { "<COMMAND>", "command" },
+--   ["r"] = { "<PROMPT>", "inactive" },
+--   ["rm"] = { "<MORE>", "inactive" },
+--   ["r?"] = { "<CONFIRM>", "inactive" },
+--   ["!"] = { "<SHELL>", "inactive" },
+--   ["null"] = { "null", "inactive" },
+-- }
+
+-- A provider function to get current mode text
+-- local function mode_text()
+--   return function()
+--     local text = modes[vim.fn.mode()][1]
+--     return status.utils.stylize(text, { padding = { right = 3 } })
+--   end
+-- end
+
 -- A highlight function to return highlight for modified files
 local function file_modified_hl(default)
   if vim.bo.modified then
@@ -144,7 +190,7 @@ return {
     surround = { separator = "left" }
   },
   -- add the vim mode component
-  status.component.builder {
+ status.component.builder {
     hl = function() return { fg = status.hl.mode_bg() } end,
     provider = get_icon "EvilMode",
     surround = { separator = "left" },
@@ -154,6 +200,16 @@ return {
       callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
     },
   },
+  -- add the vim mode component
+  -- status.component.builder {
+  --   hl = function() return { fg = status.hl.mode_bg(), bold = true } end,
+  --   provider = mode_text(),
+  --   update = {
+  --     "ModeChanged",
+  --     pattern = "*:*",
+  --     callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
+  --   },
+  -- },
   -- add a component for search results
   status.component.builder {
     condition = function() return status.condition.is_hlsearch() end,

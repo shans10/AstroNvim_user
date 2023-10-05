@@ -14,24 +14,17 @@ return {
     },
     sections = {
       lualine_a = { "mode" },
-      lualine_b = {
-        {
-          "branch",
-          color = { fg = "fg" },
-          separator = "",
-        },
-        "diff"
-      },
+      lualine_b = { "branch", "diff" },
       lualine_c = {
         {
           "filename",
           newfile_status = true,
-          path = 4,
+          -- path = 4,
         },
-        "diagnostics",
         -- "searchcount"
       },
       lualine_x = {
+        "diagnostics",
         {
           "fileformat",
           symbols = {
@@ -42,12 +35,7 @@ return {
         },
         "filetype"
       },
-      lualine_y = {
-        {
-          "progress",
-          -- color = { fg = "fg" }
-        }
-      },
+      lualine_y = { "progress" },
       lualine_z = { "location" }
     },
     inactive_sections = {

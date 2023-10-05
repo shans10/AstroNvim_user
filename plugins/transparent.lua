@@ -29,6 +29,9 @@ return {
     },
     extra_groups = {
       "FloatBorder",
+      "NeoTreeNormal",
+      "NeoTreeNormalNC",
+      "NeoTreeTabActive",
       "NormalFloat",
       -- "StatusLine",
       "WhichKeyFloat",

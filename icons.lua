@@ -44,21 +44,12 @@ elseif heirline_theme == "nvchad" then
   icons.ScrollText = ""
   icons.VimIcon = ""
 
--- Simple theme
-elseif heirline_theme == "simple" then
-  icons.ActiveTS = ""
-  icons.Bar = "┃"
-  icons.GitBranch = ""
-  icons.GitAdd = "+"
-  icons.GitChange = "~"
-  icons.GitDelete = "-"
-
 -- Minimal theme
 elseif heirline_theme == "minimal" then
-  icons.DiagnosticError = "x"
-  icons.DiagnosticHint = "?"
-  icons.DiagnosticInfo = "i"
-  icons.DiagnosticWarn = "!"
+  icons.DiagnosticError1 = "x"
+  icons.DiagnosticHint1 = "?"
+  icons.DiagnosticInfo1 = "i"
+  icons.DiagnosticWarn1 = "!"
 end
 
 return icons

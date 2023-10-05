@@ -20,8 +20,8 @@ end
 local function mode_text()
   return function()
     local text = status.env.modes[vim.fn.mode()][1]
-    -- return status.utils.stylize("-- " .. text .. " --", { padding = { left = 1, right = 3 } })
-    return status.utils.stylize(text, { padding = { left = 1, right = 3 } })
+    return status.utils.stylize("-- " .. text .. " --", { padding = { left = 1, right = 3 } })
+    -- return status.utils.stylize(text, { padding = { left = 1, right = 3 } })
   end
 end
 
@@ -69,13 +69,13 @@ return {
       flexible = 1,
       status.component.file_info {
         file_icon = false,
-        filename = { fallback = "Empty", modify = ":~:." },
+        filename = { modify = ":~:." },
         file_modified = { str = "[+]", icon = "" },
         file_read_only = { str = "[-]", icon = "" },
       },
       status.component.file_info {
         file_icon = false,
-        filename = { fallback = "Empty" },
+        filename = {},
         file_modified = { str = "[+]", icon = "" },
         file_read_only = { str = "[-]", icon = "" },
         unique_path = {}
@@ -85,6 +85,10 @@ return {
   },
   -- add a component for the current diagnostics if it exists
   status.component.diagnostics {
+    ERROR = { icon = { kind = "DiagnosticError1", padding = { left = 1, right = 0 } } },
+    WARN = { icon = { kind = "DiagnosticWarn1", padding = { left = 1, right = 0 } } },
+    INFO = { icon = { kind = "DiagnosticInfo1", padding = { left = 1, right = 0 } } },
+    HINT = { icon = { kind = "DiagnosticHint1", padding = { left = 1, right = 0 } } },
     surround = { separator = "left" },
     on_click = {
       name = "heirline_diagnostic",
@@ -101,19 +105,20 @@ return {
   -- add a component for search count and macro recording status
   status.component.builder {
     {
-      hl = { bold = true },
+      condition = status.condition.is_statusline_showcmd,
+      provider = status.provider.showcmd()
+    },
+    {
       condition = status.condition.is_hlsearch,
       provider = search_count {},
     },
     {
-      hl = { bold = true },
       condition = status.condition.is_macro_recording,
-      provider = status.provider.macro_recording { prefix = "recording @", padding = { left = 2 }  },
+      provider = status.provider.macro_recording { prefix = "recording @", padding = { left = 3 }  },
       update = {
         "RecordingEnter",
         "RecordingLeave",
-        -- TODO: remove when dropping support for Neovim v0.8
-        callback = vim.fn.has "nvim-0.9" == 0 and vim.schedule_wrap(function() vim.cmd.redrawstatus() end) or nil,
+        callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end) or nil,
       },
     },
     padding = { right = 5 },

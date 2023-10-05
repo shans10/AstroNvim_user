@@ -1,5 +1,5 @@
 local get_icon = require("astronvim.utils").get_icon
-local separator = get_icon "Separator" -- separator icon
+local component_separator = get_icon "Separator" -- separator icon
 local status = require "astronvim.utils.status"
 
 -- A highlight function to return highlight based on vi mode
@@ -75,11 +75,18 @@ return {
     padding = { right = 1 },
     surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
   },
+  -- add a component for the current git diff if it exists
+  status.component.builder {
+    condition = status.condition.git_changed,
+    { provider = "|", hl = { fg = "fg", bg = "git_branch_bg" } },
+    status.component.git_diff {
+      surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
+      padding = { right = 1 }
+    },
+  },
   -- add a section for the currently opened file information
   status.component.builder {
-    condition = function()
-      return vim.o.showtabline == 0 and is_valid_file_condition()
-    end,
+    condition = is_valid_file_condition,
     { provider = " " },
     status.component.file_info {
       file_icon = false,
@@ -91,9 +98,6 @@ return {
       surround = { separator = "none", condition = false },
     },
   },
-  -- { provider = status.utils.pad_string(separator, { left = 1, right = 1 }), hl = { fg = "separator_fg" } },
-  -- add a component for the current git diff if it exists and use no separator for the sections
-  status.component.git_diff(),
   -- fill the rest of the statusline
   -- the elements after this will appear in the middle of the statusline
   status.component.fill(),
@@ -150,7 +154,7 @@ return {
   -- add a section to show opened filetype
   status.component.builder {
     condition = status.condition.has_filetype,
-    { provider = status.utils.pad_string(separator, { right = 1 }), hl = { fg = "separator_fg" } },
+    { provider = status.utils.pad_string(component_separator, { right = 1 }), hl = { fg = "separator_fg" } },
     {
       condition = is_valid_file_condition,
       provider = status.provider.file_icon { padding = { right = 1 } },
@@ -161,12 +165,12 @@ return {
   -- add a navigation component
   status.component.builder {
     {
-      provider = status.provider.ruler { padding = { left = 1, right = 1 } },
+      provider = " %P ",
       hl = { fg = "ruler_fg", bg = "ruler_bg" },
-      update = { "CursorMoved", "CursorMovedI", "BufEnter" },
     },
     {
-      provider = " %P/%L ",
+      provider = status.provider.ruler { padding = { left = 1, right = 1 } },
+      update = { "CursorMoved", "CursorMovedI", "BufEnter" },
       hl = mode_hl
     },
   }
