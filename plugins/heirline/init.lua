@@ -2,10 +2,10 @@ return {
   "rebelot/heirline.nvim",
   optional = true,
   opts = function(_, opts)
-    local is_available = require "astronvim.utils".is_available
+    local is_available = require("astronvim.utils").is_available
 
     -- List of supported themes to match with currently selected theme
-    local themes = { ["doom"] = true,["lunarvim"] = true, ["minimal"] = true,["nvchad"] = true }
+    local themes = { ["doom"] = true, ["lunarvim"] = true, ["minimal"] = true, ["nvchad"] = true }
 
     -- Get current statusline theme, set it to "astronvim" if it is nil
     local theme = vim.g.heirline_theme
@@ -26,7 +26,7 @@ return {
         -- show the path to the file relative to the working directory
         status.component.separated_path {
           condition = function() return not vim.g.breadcrumbs end,
-          path_func = status.provider.filename { modify = ":.:h" }
+          path_func = status.provider.filename { modify = ":.:h" },
         },
         -- add a component to show current filename
         status.component.file_info {

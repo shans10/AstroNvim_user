@@ -11,7 +11,7 @@ end
 -- A condition function if buffer is a valid file
 local function is_valid_file_condition(self)
   local bufnr = self and self.bufnr or 0
-  return not status.condition.buffer_matches ({
+  return not status.condition.buffer_matches({
     buftype = { "nofile", "prompt", "quickfix" },
     filetype = { "^git.*", "fugitive", "toggleterm", "NvimTree" },
   }, bufnr)
@@ -60,7 +60,7 @@ return {
     -- set mode text and hl
     {
       provider = status.provider.mode_text { padding = { left = 1, right = 1 } },
-      hl = mode_hl
+      hl = mode_hl,
     },
     update = {
       "ModeChanged",
@@ -70,7 +70,10 @@ return {
   },
   -- add a component for the current git branch if it exists and use no separator for the sections
   status.component.builder {
-    { provider = status.utils.pad_string(get_icon "GitBranch", { left = 1, right = 1 }), hl = { fg = "git_branch_icon" } },
+    {
+      provider = status.utils.pad_string(get_icon "GitBranch", { left = 1, right = 1 }),
+      hl = { fg = "git_branch_icon" },
+    },
     { provider = status.provider.git_branch {} },
     padding = { right = 1 },
     surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
@@ -81,7 +84,7 @@ return {
     { provider = "|", hl = { fg = "fg", bg = "git_branch_bg" } },
     status.component.git_diff {
       surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
-      padding = { right = 1 }
+      padding = { right = 1 },
     },
   },
   -- add a section for the currently opened file information
@@ -110,12 +113,12 @@ return {
   { provider = "%<" },
   -- add a component to show lsp progress
   status.component.lsp {
-    condition = function() return not require("astronvim.utils").is_available("noice.nvim") end,
+    condition = function() return not require("astronvim.utils").is_available "noice.nvim" end,
     lsp_client_names = false,
-    surround = { separator = "right", color = "bg" }
+    surround = { separator = "right", color = "bg" },
   },
   -- add a component for the current diagnostics if it exists
-  status.component.diagnostics { surround = { separator = "right" }, },
+  status.component.diagnostics { surround = { separator = "right" } },
   -- add a component to show running lsp clients
   status.component.builder {
     fallthrough = false,
@@ -129,7 +132,7 @@ return {
     {
       flexible = 1,
       { provider = status.provider.str { str = "LS Inactive", padding = { left = 1, right = 1 } } },
-      { provider = "" }
+      { provider = "" },
     },
     on_click = {
       name = "heirline_lsp",
@@ -158,9 +161,9 @@ return {
     {
       condition = is_valid_file_condition,
       provider = status.provider.file_icon { padding = { right = 1 } },
-      hl = status.hl.filetype_color
+      hl = status.hl.filetype_color,
     },
-    { provider = status.provider.filetype { padding = { right = 2 } } }
+    { provider = status.provider.filetype { padding = { right = 2 } } },
   },
   -- add a navigation component
   status.component.builder {
@@ -171,7 +174,7 @@ return {
     {
       provider = status.provider.ruler { padding = { left = 1, right = 1 } },
       update = { "CursorMoved", "CursorMovedI", "BufEnter" },
-      hl = mode_hl
+      hl = mode_hl,
     },
-  }
+  },
 }

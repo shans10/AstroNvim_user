@@ -20,7 +20,7 @@ return {
         treesitter = true,
         which_key = true,
       },
-    }
+    },
   },
   {
     "shaunsingh/nord.nvim",
@@ -34,5 +34,5 @@ return {
   {
     "shans10/adwaita.nvim",
     enabled = false,
-  }
+  },
 }

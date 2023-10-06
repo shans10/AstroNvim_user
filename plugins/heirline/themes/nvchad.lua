@@ -1,9 +1,9 @@
 local get_icon = require("astronvim.utils").get_icon
-local is_available = require "astronvim.utils".is_available
+local is_available = require("astronvim.utils").is_available
 local status = require "astronvim.utils.status"
 local separators = {
   left = { "", " " }, -- separator for the left side of the statusline
-  right = { " ", "" } -- separator for the right side of the statusline
+  right = { " ", "" }, -- separator for the right side of the statusline
 }
 
 -- Statusline components table
@@ -37,7 +37,7 @@ return {
     -- enable the file_icon and disable the highlighting based on filetype
     file_icon = {
       hl = false,
-      padding = { left = 0 }
+      padding = { left = 0 },
     },
     filename = { fallback = "Empty" },
     -- add padding
@@ -66,7 +66,7 @@ return {
       name = "heirline_diagnostic",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, 100)
+          vim.defer_fn(function() require("telescope.builtin").diagnostics { bufnr = 0 } end, 100)
         end
       end,
     },

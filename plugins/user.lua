@@ -6,8 +6,8 @@ return {
     opts = {
       lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
       lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
-      lastplace_open_folds = true
-    }
+      lastplace_open_folds = true,
+    },
   },
   {
     "lambdalisue/suda.vim",
@@ -15,7 +15,7 @@ return {
       "SudaRead",
       "SudaWrite",
     },
-    enabled = function() return not vim.g.win32 end
+    enabled = function() return not vim.g.win32 end,
   },
   {
     "echasnovski/mini.move",
@@ -60,6 +60,6 @@ return {
   {
     "gbprod/cutlass.nvim",
     lazy = false,
-    opts = { cut_key = "x", }
+    opts = { cut_key = "x" },
   },
 }

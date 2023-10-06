@@ -1,4 +1,4 @@
-local is_available = require "astronvim.utils".is_available
+local is_available = require("astronvim.utils").is_available
 local status = require "astronvim.utils.status"
 
 -- A highlight function to return highlight based on vi mode
@@ -10,7 +10,7 @@ end
 -- A condition function if buffer is a valid file
 local function is_valid_file_condition(self)
   local bufnr = self and self.bufnr or 0
-  return not status.condition.buffer_matches ({
+  return not status.condition.buffer_matches({
     buftype = { "nofile", "prompt", "quickfix" },
     filetype = { "^git.*", "fugitive", "toggleterm", "NvimTree" },
   }, bufnr)
@@ -78,10 +78,16 @@ return {
         filename = {},
         file_modified = { str = "[+]", icon = "" },
         file_read_only = { str = "[-]", icon = "" },
-        unique_path = {}
+        unique_path = {},
       },
     },
-    status.component.file_info { file_icon = false, filetype = {}, filename = false, file_modified = false, file_read_only = false },
+    status.component.file_info {
+      file_icon = false,
+      filetype = {},
+      filename = false,
+      file_modified = false,
+      file_read_only = false,
+    },
   },
   -- add a component for the current diagnostics if it exists
   status.component.diagnostics {
@@ -94,7 +100,7 @@ return {
       name = "heirline_diagnostic",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, 100)
+          vim.defer_fn(function() require("telescope.builtin").diagnostics { bufnr = 0 } end, 100)
         end
       end,
     },
@@ -106,7 +112,7 @@ return {
   status.component.builder {
     {
       condition = status.condition.is_statusline_showcmd,
-      provider = status.provider.showcmd()
+      provider = status.provider.showcmd(),
     },
     {
       condition = status.condition.is_hlsearch,
@@ -114,7 +120,7 @@ return {
     },
     {
       condition = status.condition.is_macro_recording,
-      provider = status.provider.macro_recording { prefix = "recording @", padding = { left = 3 }  },
+      provider = status.provider.macro_recording { prefix = "recording @", padding = { left = 3 } },
       update = {
         "RecordingEnter",
         "RecordingLeave",
@@ -126,7 +132,9 @@ return {
       separator = "right",
       color = "cmd_info_bg",
       condition = function()
-        return status.condition.is_hlsearch() or status.condition.is_macro_recording() or status.condition.is_statusline_showcmd()
+        return status.condition.is_hlsearch()
+          or status.condition.is_macro_recording()
+          or status.condition.is_statusline_showcmd()
       end,
     },
     condition = function() return vim.opt.cmdheight:get() == 0 end,
@@ -141,8 +149,8 @@ return {
   -- add a percentage navigation component
   status.component.builder {
     provider = " %P ",
-    surround = { separator = "right" }
+    surround = { separator = "right" },
   },
   -- statusline is cut here when there is not enough space
-  { provider = '%<'}
+  { provider = "%<" },
 }

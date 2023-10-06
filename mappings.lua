@@ -1,5 +1,5 @@
-local is_available = require "astronvim.utils".is_available
-local get_icon = require "astronvim.utils".get_icon
+local is_available = require("astronvim.utils").is_available
+local get_icon = require("astronvim.utils").get_icon
 local utils = require "user.utils"
 
 local maps = { i = {}, n = {}, t = {}, v = {}, x = {} }
@@ -24,7 +24,8 @@ maps.n["<C-d>"] = { "<C-d>zz" }
 maps.n["<C-u>"] = { "<C-u>zz" }
 
 -- Standard leader-key operations
-maps.n["<leader>."] = { function() require("telescope").extensions.file_browser.file_browser() end, desc = "File browser" }
+maps.n["<leader>."] =
+  { function() require("telescope").extensions.file_browser.file_browser() end, desc = "File browser" }
 maps.n["<leader><C-w>"] = { "<cmd>cd %:p:h<cr>", desc = "Set CWD to current file" }
 
 -- Better search
@@ -36,9 +37,7 @@ maps.n["-"] = { "<C-x>", desc = "Decrement number" }
 maps.n["+"] = { "<C-a>", desc = "Increment number" }
 
 -- Neo-tree
-if is_available "neo-tree.nvim" then
-  maps.n["<C-n>"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle nvim-tree" }
-end
+if is_available "neo-tree.nvim" then maps.n["<C-n>"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle nvim-tree" } end
 
 -- External terminal
 maps.n["<leader>tt"] = { "<cmd>!alacritty<cr><cr>", desc = "Open alacritty in cwd" }
@@ -49,11 +48,11 @@ maps.n["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" }
 -- Buffer Standalone Keybindings
 maps.n["<S-l>"] = {
   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
-  desc = "Next buffer"
+  desc = "Next buffer",
 }
 maps.n["<S-h>"] = {
   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-  desc = "Previous buffer"
+  desc = "Previous buffer",
 }
 maps.n["<leader>ba"] = { "ggVG", desc = "Select all" }
 maps.n["<leader>bd"] = { function() require("astronvim.utils.buffer").close() end, desc = "Delete buffer" }
@@ -62,26 +61,25 @@ maps.n["<leader>bi"] = { "gg=G", desc = "Indent all" }
 maps.n["<leader>bl"] = { utils.last_buffer(), desc = "Last buffer" }
 maps.n["<leader>bn"] = {
   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
-  desc = "Next buffer"
+  desc = "Next buffer",
 }
 maps.n["<leader>bp"] = {
   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-  desc = "Previous buffer"
+  desc = "Previous buffer",
 }
 maps.n["<leader>bs"] = { "<cmd>w<cr>", desc = "Save buffer" }
 maps.n["<leader>bS"] = { "<cmd>wa<cr>", desc = "Save all buffers" }
 maps.n["<leader>bt"] = { "<cmd>%s/\\s\\+$//e | noh<cr>", desc = "Remove trailing whitespaces" }
-if is_available "suda.vim" then
-  maps.n["<leader>bu"] = { "<cmd>SudaWrite<cr>", desc = "Save buffer as root" }
-end
+if is_available "suda.vim" then maps.n["<leader>bu"] = { "<cmd>SudaWrite<cr>", desc = "Save buffer as root" } end
 maps.n["<leader>by"] = { "ggVGy", desc = "Yank buffer" }
 maps.n["<leader>b<C-s>"] = { desc = get_icon("Sort", 1, true) .. "Sort Buffers" }
 maps.n["<leader>b<C-s>e"] = { function() require("astronvim.utils.buffer").sort "extension" end, desc = "By extension" }
 maps.n["<leader>b<C-s>r"] =
-{ function() require("astronvim.utils.buffer").sort "unique_path" end, desc = "By relative path" }
+  { function() require("astronvim.utils.buffer").sort "unique_path" end, desc = "By relative path" }
 maps.n["<leader>b<C-s>p"] = { function() require("astronvim.utils.buffer").sort "full_path" end, desc = "By full path" }
 maps.n["<leader>b<C-s>i"] = { function() require("astronvim.utils.buffer").sort "bufnr" end, desc = "By buffer number" }
-maps.n["<leader>b<C-s>m"] = { function() require("astronvim.utils.buffer").sort "modified" end, desc = "By modification" }
+maps.n["<leader>b<C-s>m"] =
+  { function() require("astronvim.utils.buffer").sort "modified" end, desc = "By modification" }
 
 -- Heirline bufferline
 if vim.g.tabline then
@@ -135,7 +133,7 @@ if is_available "telescope.nvim" then
       if #vim.t.bufs > 1 then
         require("telescope.builtin").buffers { sort_mru = true, ignore_current_buffer = true }
       else
-        require "astronvim.utils".notify "No other buffers open"
+        require("astronvim.utils").notify "No other buffers open"
       end
     end,
     desc = "Switch buffer",
@@ -145,7 +143,7 @@ if is_available "telescope.nvim" then
   -- Find
   maps.n["<leader>fd"] = {
     "<cmd>Telescope find_files cwd=%:p:h find_command=rg,--ignore,--hidden,--files<cr>",
-    desc = "Find files in CWD"
+    desc = "Find files in CWD",
   }
   maps.n["<leader>fp"] = { function() require("telescope").extensions.project.project() end, desc = "Find projects" }
   maps.n["<leader>fu"] = { "<cmd>Telescope undo<cr>", desc = "Find undos" }
@@ -153,15 +151,16 @@ if is_available "telescope.nvim" then
 
   -- LSP
   maps.n["<leader>ld"] = {
-    function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end,
-    desc = "Document diagnostics"
+    function() require("telescope.builtin").diagnostics { bufnr = 0 } end,
+    desc = "Document diagnostics",
   }
   maps.n["<leader>lD"] = { function() require("telescope.builtin").diagnostics() end, desc = "Workspace diagnostics" }
   maps.n["<leader>le"] = { function() require("telescope.builtin").lsp_definitions() end, desc = "Show definition" }
 end
 
 -- UI
-maps.n["<leader>uA"] = { function() require("astronvim.utils.ui").toggle_autoformat() end, desc = "Toggle autoformatting" }
+maps.n["<leader>uA"] =
+  { function() require("astronvim.utils.ui").toggle_autoformat() end, desc = "Toggle autoformatting" }
 
 -- Trouble
 if is_available "trouble.nvim" then

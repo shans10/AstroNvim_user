@@ -9,9 +9,9 @@ return function(colors)
 
   -- Doom theme
   if theme == "doom" then
-    local func = get_hlgroup("Function")
-    local search = get_hlgroup("IncSearch")
-    local typedef = get_hlgroup("TypeDef")
+    local func = get_hlgroup "Function"
+    local search = get_hlgroup "IncSearch"
+    local typedef = get_hlgroup "TypeDef"
     colors.lines_fg = func.fg
     colors.search_fg = search.fg
     colors.search_bg = search.bg

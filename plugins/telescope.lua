@@ -4,7 +4,7 @@ return {
     "debugloop/telescope-undo.nvim",
     "jvgrootveld/telescope-zoxide",
     "nvim-telescope/telescope-file-browser.nvim",
-    "nvim-telescope/telescope-project.nvim"
+    "nvim-telescope/telescope-project.nvim",
   },
   opts = function(_, opts)
     local actions = require "telescope.actions"
@@ -21,7 +21,7 @@ return {
             },
           },
           previewer = false,
-          theme = "dropdown"
+          theme = "dropdown",
         },
         project = {
           base_dirs = {
@@ -38,11 +38,11 @@ return {
             ["<C-b>"] = {
               keepinsert = true,
               action = function(selection)
-                require("telescope").extensions.file_browser.file_browser({ cwd = selection.path })
-              end
+                require("telescope").extensions.file_browser.file_browser { cwd = selection.path }
+              end,
             },
-          }
-        }
+          },
+        },
       },
       pickers = {
         buffers = {
@@ -54,15 +54,15 @@ return {
           ignore_current_buffer = true,
           previewer = false,
           sort_mru = true,
-          theme = "dropdown"
+          theme = "dropdown",
         },
         find_files = {
           previewer = false,
-          theme = "dropdown"
+          theme = "dropdown",
         },
         oldfiles = {
           previewer = false,
-          theme = "dropdown"
+          theme = "dropdown",
         },
       },
     })

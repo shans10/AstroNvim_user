@@ -5,10 +5,10 @@ return {
     local cmp_sources = require "cmp.config.sources"
 
     return {
-      mapping = cmp_mapping.preset.cmdline({
-        ['<C-j>'] = {
+      mapping = cmp_mapping.preset.cmdline {
+        ["<C-j>"] = {
           c = function(fallback)
-            local cmp = require('cmp')
+            local cmp = require "cmp"
             if cmp.visible() then
               cmp.select_next_item()
             else
@@ -16,9 +16,9 @@ return {
             end
           end,
         },
-        ['<C-k>'] = {
+        ["<C-k>"] = {
           c = function(fallback)
-            local cmp = require('cmp')
+            local cmp = require "cmp"
             if cmp.visible() then
               cmp.select_prev_item()
             else
@@ -26,19 +26,19 @@ return {
             end
           end,
         },
-      }),
+      },
       sources = cmp_sources({
         { name = "path" },
       }, {
-          {
-            name = "cmdline",
-            option = {
-              ignore_cmds = { "Man", "!" },
-            },
+        {
+          name = "cmdline",
+          option = {
+            ignore_cmds = { "Man", "!" },
           },
-        }, {
-          { name = "buffer" },
-        }),
+        },
+      }, {
+        { name = "buffer" },
+      }),
     }
   end,
   config = function(_, opts) require("cmp").setup.cmdline(":", opts) end,

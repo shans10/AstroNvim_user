@@ -7,10 +7,10 @@ return {
         guibg = "Normal",
       },
       NormalFloat = {
-        link = "NormalFloat"
+        link = "NormalFloat",
       },
       FloatBorder = {
-        link = "FloatBorder"
+        link = "FloatBorder",
       },
     },
   },

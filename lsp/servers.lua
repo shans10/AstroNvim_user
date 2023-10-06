@@ -4,5 +4,5 @@ return {
   "hls",
   "pyright",
   "rust_analyzer",
-  "tsserver"
+  "tsserver",
 }

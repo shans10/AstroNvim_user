@@ -1,14 +1,14 @@
 return {
   "onsails/lspkind.nvim",
   opts = function(_, opts)
-    opts.mode = 'symbol_text'
-    opts.menu = ({
+    opts.mode = "symbol_text"
+    opts.menu = {
       nvim_lsp = "[LSP]",
       luasnip = "[LuaSnip]",
       buffer = "[Buffer]",
       path = "[Path]",
-    })
-    opts.preset = 'codicons'
+    }
+    opts.preset = "codicons"
     opts.symbol_map = {
       Array = "",
       Boolean = "",
@@ -46,5 +46,5 @@ return {
       Variable = "",
     }
     return opts
-  end
+  end,
 }

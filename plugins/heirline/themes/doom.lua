@@ -1,5 +1,5 @@
 local get_icon = require("astronvim.utils").get_icon
-local is_available = require "astronvim.utils".is_available
+local is_available = require("astronvim.utils").is_available
 local status = require "astronvim.utils.status"
 
 -- Mode text and highlights
@@ -65,19 +65,19 @@ local function file_path_init(self)
   local current_path = vim.api.nvim_buf_get_name(bufnr)
 
   if current_path == "" then
-    pwd = vim.fn.fnamemodify(pwd, ':t')
+    pwd = vim.fn.fnamemodify(pwd, ":t")
     current_path = nil
   elseif current_path:find(pwd, 1, true) then
-    current_path = vim.fn.fnamemodify(current_path, ':~:.:h')
-    pwd = vim.fn.fnamemodify(pwd, ':t') .. os_sep
-    if current_path == '.' then
+    current_path = vim.fn.fnamemodify(current_path, ":~:.:h")
+    pwd = vim.fn.fnamemodify(pwd, ":t") .. os_sep
+    if current_path == "." then
       current_path = nil
     else
       current_path = current_path .. os_sep
     end
   else
     pwd = nil
-    current_path = vim.fn.fnamemodify(current_path, ':~:.:h') .. os_sep
+    current_path = vim.fn.fnamemodify(current_path, ":~:.:h") .. os_sep
   end
 
   self.pwd = pwd
@@ -101,7 +101,7 @@ end
 -- A condition function if buffer is a valid file
 local function is_valid_file_condition(self)
   local bufnr = self and self.bufnr or 0
-  return not status.condition.buffer_matches ({
+  return not status.condition.buffer_matches({
     buftype = { "nofile", "prompt", "quickfix" },
     filetype = { "^git.*", "fugitive", "toggleterm", "NvimTree" },
   }, bufnr)
@@ -109,17 +109,14 @@ end
 
 -- A condition function to check if visual mode is active
 local function is_visual_mode_condition()
-  return (vim.fn.mode():find("[Vv]") ~= nil or vim.fn.mode():find("[^V]") ~= nil) and vim.fn.mode():find("[n]") == nil
+  return (vim.fn.mode():find "[Vv]" ~= nil or vim.fn.mode():find "[^V]" ~= nil) and vim.fn.mode():find "[n]" == nil
 end
 
 -- A provider function for current relative path
 local function current_path_provider(opts)
   return function(self)
     local bufnr = self and self.bufnr or 0
-    return status.utils.stylize(
-      vim.bo[bufnr].filetype ~= "help" and self.current_path,
-      opts
-    )
+    return status.utils.stylize(vim.bo[bufnr].filetype ~= "help" and self.current_path, opts)
   end
 end
 
@@ -127,7 +124,7 @@ end
 local function cwd_provider(opts)
   return function(self)
     local cwd = vim.fn.getcwd(0)
-    local icon = status.utils.pad_string(get_icon("Directory"), { left = 1, right = 1 })
+    local icon = status.utils.pad_string(get_icon "Directory", { left = 1, right = 1 })
     self.cwd = vim.fn.fnamemodify(cwd, ":t")
     return status.utils.stylize(icon .. self.cwd, opts)
   end
@@ -137,17 +134,12 @@ end
 local function file_size_provider(opts)
   return function(self)
     local no_search = not status.condition.is_hlsearch()
-    local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
+    local suffix = { "b", "k", "M", "G", "T", "P", "E" }
     local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(self and self.bufnr or 0))
     fsize = (fsize < 0 and 0) or fsize
-    if fsize < 1000 then
-      return status.utils.stylize(no_search and fsize .. suffix[1], opts)
-    end
+    if fsize < 1000 then return status.utils.stylize(no_search and fsize .. suffix[1], opts) end
     local i = math.floor((math.log(fsize) / math.log(1000)))
-    return status.utils.stylize(
-      no_search and string.format("%.2g%s", fsize / 1000 ^ i, suffix[i + 1]),
-      opts
-    )
+    return status.utils.stylize(no_search and string.format("%.2g%s", fsize / 1000 ^ i, suffix[i + 1]), opts)
   end
 end
 
@@ -187,10 +179,10 @@ return {
   status.component.builder {
     hl = { fg = "normal" },
     provider = get_icon "Bar",
-    surround = { separator = "left" }
+    surround = { separator = "left" },
   },
   -- add the vim mode component
- status.component.builder {
+  status.component.builder {
     hl = function() return { fg = status.hl.mode_bg() } end,
     provider = get_icon "EvilMode",
     surround = { separator = "left" },
@@ -215,7 +207,11 @@ return {
     condition = function() return status.condition.is_hlsearch() end,
     hl = { fg = "search_fg" },
     provider = status.provider.search_count { padding = { left = 1, right = 1 } },
-    surround = { separator = "left", color = "search_bg", condition = function() return status.condition.is_hlsearch() end }
+    surround = {
+      separator = "left",
+      color = "search_bg",
+      condition = function() return status.condition.is_hlsearch() end,
+    },
   },
   -- add component to show current buffer size
   status.component.builder {
@@ -229,31 +225,33 @@ return {
       condition = is_valid_file_condition,
       hl = { fg = "file_info_fg", bold = true },
       { provider = status.provider.file_icon { padding = { right = 1 } }, hl = status.hl.filetype_color },
-      { provider = status.provider.file_modified { icon = { kind = "DoomFileModified" }, padding = { right = 1 } },
-        hl = { fg = "diag_ERROR" } },
+      {
+        provider = status.provider.file_modified { icon = { kind = "DoomFileModified" }, padding = { right = 1 } },
+        hl = { fg = "diag_ERROR" },
+      },
       {
         flexible = 1,
         {
           provider = work_dir_provider(),
-          hl = function() return file_modified_hl("work_dir_fg") end
+          hl = function() return file_modified_hl "work_dir_fg" end,
         },
-        { provider = "" }
+        { provider = "" },
       },
       {
         flexible = 2,
         {
           provider = current_path_provider(),
-          hl = function() return file_modified_hl("visual") end
+          hl = function() return file_modified_hl "visual" end,
         },
-        { provider = "" }
+        { provider = "" },
       },
       {
         provider = status.provider.filename { padding = { right = 1 } },
-        hl = function() return file_modified_hl() end
+        hl = function() return file_modified_hl() end,
       },
       { provider = status.provider.file_read_only(), hl = { fg = "diag_WARN" } },
       { provider = "%<" },
-      init = file_path_init
+      init = file_path_init,
     },
     {
       hl = { fg = "treesitter_fg", bold = true },
@@ -283,9 +281,9 @@ return {
   status.component.fill(),
   -- add a component to show lsp progress
   status.component.lsp {
-    condition = function() return not require("astronvim.utils").is_available("noice.nvim") end,
+    condition = function() return not require("astronvim.utils").is_available "noice.nvim" end,
     lsp_client_names = false,
-    surround = { separator = "right", color = "bg" }
+    surround = { separator = "right", color = "bg" },
   },
   -- add a component for the current diagnostics if it exists
   status.component.builder {
@@ -310,7 +308,7 @@ return {
       name = "heirline_diagnostic",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, 100)
+          vim.defer_fn(function() require("telescope.builtin").diagnostics { bufnr = 0 } end, 100)
         end
       end,
     },
@@ -320,7 +318,7 @@ return {
   status.component.builder {
     hl = { fg = "treesitter_fg" },
     condition = status.condition.lsp_attached,
-    provider = status.utils.pad_string(get_icon("ActiveLSP"), { right = 2 }),
+    provider = status.utils.pad_string(get_icon "ActiveLSP", { right = 2 }),
     surround = { separator = "right", condition = status.condition.lsp_attached },
     on_click = {
       name = "heirline_lsp",
@@ -340,7 +338,7 @@ return {
     condition = status.condition.has_filetype,
     hl = { fg = "work_dir_fg", bold = true },
     provider = filetype_provider { padding = { right = 1 } },
-    surround = { separator = "right", condition = status.condition.has_filetype }
+    surround = { separator = "right", condition = status.condition.has_filetype },
   },
   -- add a component for the current git branch if it exists
   status.component.git_branch {
