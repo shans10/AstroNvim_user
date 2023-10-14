@@ -68,37 +68,38 @@ return {
       callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
     },
   },
-  -- add a component for the current git branch if it exists and use no separator for the sections
+  -- add a section for the currently opened file information
   status.component.builder {
+    condition = is_valid_file_condition,
+    -- { provider = " " },
+    status.component.file_info {
+      file_icon = false,
+      filename = { padding = { left = 1 } },
+      file_modified = { str = "[+]", icon = "" },
+      file_read_only = { str = "[-]", icon = "" },
+      -- unique_path = {},
+      padding = { right = 1 },
+      surround = { separator = "none", color = "git_branch_bg", condition = false },
+    },
+  },
+  -- add a component for the current git branch if it exists
+  status.component.builder {
+    condition = status.condition.is_git_repo,
+    -- { provider = "|", hl = { fg = "fg", bg = "git_branch_bg" } },
     {
       provider = status.utils.pad_string(get_icon "GitBranch", { left = 1, right = 1 }),
       hl = { fg = "git_branch_icon" },
     },
     { provider = status.provider.git_branch {} },
     padding = { right = 1 },
-    surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
+    -- surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
   },
   -- add a component for the current git diff if it exists
   status.component.builder {
     condition = status.condition.git_changed,
-    { provider = "|", hl = { fg = "fg", bg = "git_branch_bg" } },
     status.component.git_diff {
-      surround = { separator = "none", color = "git_branch_bg", condition = status.condition.is_git_repo },
+      surround = { separator = "none", condition = status.condition.is_git_repo },
       padding = { right = 1 },
-    },
-  },
-  -- add a section for the currently opened file information
-  status.component.builder {
-    condition = is_valid_file_condition,
-    { provider = " " },
-    status.component.file_info {
-      file_icon = false,
-      filename = {},
-      file_modified = { str = "[+]", icon = "" },
-      file_read_only = { str = "[-]", icon = "" },
-      unique_path = {},
-      padding = { right = 1 },
-      surround = { separator = "none", condition = false },
     },
   },
   -- fill the rest of the statusline

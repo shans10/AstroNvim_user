@@ -6,7 +6,7 @@ return function()
   return {
     HighlightURL = { underline = true },
     NoiceMini = { bg = notify_bg },
-    NotifyBackground = { bg = notify_bg },
+    NotifyBackground = { bg = "#000000" },
     WinBar = { fg = text },
     WinBarNC = { fg = grey },
 
