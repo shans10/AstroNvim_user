@@ -33,7 +33,7 @@ return {
       "NeoTreeNormalNC",
       "NeoTreeTabActive",
       "NormalFloat",
-      "StatusLine",
+      -- "StatusLine",
       "WhichKeyFloat",
     },
   },

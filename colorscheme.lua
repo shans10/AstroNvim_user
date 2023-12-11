@@ -1,1 +1,1 @@
-return "catppuccin"
+return "github_dark_default"
