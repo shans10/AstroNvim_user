@@ -2,7 +2,7 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    enabled = false,
+    -- enabled = false,
     opts = {
       flavour = "mocha",
       dim_inactive = { enabled = true, percentage = 0.35 },
@@ -33,7 +33,7 @@ return {
   },
   {
     "projekt0n/github-nvim-theme",
-    -- enabled = false,
+    enabled = false,
   },
   {
     "shans10/adwaita.nvim",
