@@ -22,7 +22,7 @@ return function(colors)
     local constant_fg = get_hlgroup("Constant").fg
     local cursorline_bg = get_hlgroup("CursorLine").bg
     local normal_fg = get_hlgroup("Normal").fg
-    colors.git_branch_bg = cursorline_bg
+    colors.file_bg = cursorline_bg
     colors.git_branch_fg = normal_fg
     colors.git_branch_icon = constant_fg
     colors.ruler_fg = normal_fg

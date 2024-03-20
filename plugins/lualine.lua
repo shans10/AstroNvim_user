@@ -19,7 +19,7 @@ return {
         {
           "filename",
           newfile_status = true,
-          -- path = 4,
+          path = 1,
         },
         -- "searchcount"
       },
