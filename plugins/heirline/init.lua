@@ -45,31 +45,18 @@ return {
           prefix = true,
           padding = { left = 0 },
         },
-        -- fill the rest of the winbar
-        -- the elements after this will appear in the right corner of the statusline
-        -- status.component.fill(),
-        -- status.component.builder {
-        --   condition = function()
-        --     return vim.fn.mode():find("[Vv]") ~= nil
-        --   end,
-        --   provider = function()
-        --     local starts = vim.fn.line("v")
-        --     local ends = vim.fn.line(".")
-        --     local count = starts <= ends and ends - starts + 1 or starts - ends + 1
-        --     return count .. "L "
-        --   end,
-        --   surround = { separator = "none" }
-        -- },
-        -- add a component to show relative path of current file
-        -- status.component.builder {
-        --   condition = function() return not vim.g.breadcrumbs end,
-        --   hl = status.hl.get_attributes("winbarnc"),
-        --   provider = function()
-        --     local relative_path = vim.fn.expand("%:~:.:h")
-        --     return status.utils.stylize(relative_path ~= "." and "[" .. relative_path .. "]")
-        --   end,
-        --   surround = { separator = "right" },
-        -- },
+        -- add a buffer close button when breadcrumbs are inactive
+        status.component.builder {
+          condition = function() return not vim.g.breadcrumbs end,
+          hl = { fg = "diag_ERROR" },
+          provider = status.utils.pad_string(require("astronvim.utils").get_icon "BufferClose", { left = 1 }),
+          padding = { left = 1 },
+          on_click = {
+            callback = function(_, minwid) require("astronvim.utils.buffer").close(minwid) end,
+            minwid = function(self) return self.bufnr end,
+            name = "heirline_tabline_close_buffer_callback",
+          },
+        },
       }
     elseif not vim.g.winbar_enabled then
       opts.winbar = nil
